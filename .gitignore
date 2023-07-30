@@ -6,6 +6,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.filters
+*.vcxproj
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
