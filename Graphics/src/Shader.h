@@ -3,24 +3,33 @@
 #include<iostream>
 #include<fstream>
 #include <sstream>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+#include "DebugUtils.h"
+
 class Shader 
 {
 public:
-	//PROGRAM ID
-
-	Shader(const char* VFilePath, const char* FFilePath);
+	//Constructor
+	Shader();
 
 	//USE / ACTIVATE SHADER
 	void use();
 
 	// utility uniform functions
-	void setBool(const std::string& name, bool value) const;
+	void setUniformBool(const std::string& name, bool value) const;
 	
-	void setInt(const std::string& name, int value) const;
+	void setUniformInt(const std::string& name, int value) const;
 	
-	void setFloat(const std::string& name, float value) const;
+	void setUniformFloat(const std::string& name, float value) const;
 	
+	void setUniformMat4f(const std::string& name, glm::mat4 Matrix);
+
+	std::string readShadersCode(const char* filePath);
+
 	uint32_t getId() { return m_ID; }
 private:
-	uint32_t m_ID = 0;
+	//PROGRAM ID
+	uint32_t m_ID;
 };
