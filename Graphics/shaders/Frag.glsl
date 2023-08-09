@@ -1,5 +1,4 @@
 #version 460 core
-in vec4 color;
 out vec4 FragColor;
 in vec2 texCoord;
 uniform sampler2D texture1;

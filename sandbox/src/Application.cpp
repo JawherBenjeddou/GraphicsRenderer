@@ -45,36 +45,69 @@ int main(int argc, char* argv[])
     Shader shader;
 
     float vertices[] = {
-        // Position (x, y, z)      // Texture Coordinates (s, t)   // Color (r, g, b)
-         0.5f,  0.5f, 0.0f,       1.0f, 0.0f,                   0.0f, 1.0f, 1.0f, // bottom right
-        -0.5f,  0.5f, 0.0f,       0.0f, 0.0f,                  0.0f, 1.0f, 0.0f, // bottom left
-        -0.5f, -0.5f, 0.0f,       0.0f, 1.0f,                  1.0f, 0.0f, 0.0f, // top left
-         0.5f, -0.5f, 0.0f,       1.0f, 1.0f,                   0.0f, 0.0f, 1.0f // top right
+     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+     0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+     0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+     -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+     -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+     -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+     -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+     0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
+     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+     -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
+    };
+    float text[] = {
+        // Texture Coordinates (s, t) 
+       1.0f, 0.0f,
+       0.0f, 0.0f,
+       0.0f, 1.0f,
+       1.0f, 1.0f,
     };
 
-    unsigned int indices[] = { // note that we start from 0!
-     0, 1, 3, // first triangle
-     1, 2, 3 // second triangle
-    };
     VAO vao;
-    EBO ebo(indices, sizeof(indices), 6);
-    VBO vbo(vertices, sizeof(vertices));
-    // vertex attribute pointers for position (index 0)
-    GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0));
-    GLCall(glEnableVertexAttribArray(0));
+    VBO vbo;
 
+    vbo.BufferData(sizeof(vertices) + sizeof(text), nullptr);
 
-    // vertex attribute pointers for texture coordinates (index 2)
-    GLCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (const void*)(3 * sizeof(float))));
-    GLCall(glEnableVertexAttribArray(2));
+    // Upload vertex data
+    vbo.BufferSubData(0, sizeof(vertices), vertices);
 
-    // vertex attribute pointers for color (index 1)
-    GLCall(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (const void*)(5 * sizeof(float))));
-    GLCall(glEnableVertexAttribArray(1));
-    glm::mat4 test = glm::mat4(1.0f);
-    test = glm::translate(test, glm::vec3(1.0f, 1.0f, 1.0f));
-    test = glm::rotate(test, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-    test = glm::scale(test, glm::vec3(0.5,0.5,0.5));
+    // Upload texture coordinate data
+    vbo.BufferSubData(sizeof(vertices), sizeof(text), text);
+
+    // Set up attribute pointers for vertex positions and texture coordinates
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
 
     //// Print the translation matrix
     //for (int i = 0; i < 4; ++i) {
@@ -96,77 +129,44 @@ int main(int argc, char* argv[])
     GuiSetup::OnAttach(window);
 
 
-    
 
-    float x = 0.0f, y = 0.0f, z = 0.0f;
-    float x2 = 1.5f, y2 = 1.5f, z2 = 0.0f;
+
+
+
+
     float f = 0.5f;
-    float RotationDegree = 0.0f;
     ImVec4 clear_color = ImVec4(0.39f, 0.22f, 0.39f, 1.00f);
     glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         GLCall(glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w));
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         vao.Bind();
         Renderer::Clear();
-        Renderer::Draw(vao, ebo, shader);
+        Renderer::Draw(vao,nullptr, shader);
 
         GuiSetup::Begin();
-        glm::mat4 translation = glm::mat4(1.0f);
 
         //// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
-
             static int counter = 0;
-            shader.setUniformFloat("visibility", f);
+            glm::mat4 model = glm::rotate(glm::mat4(1.0f), static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(1.0f, 1.0f, 0.0f));
+            glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+            glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f,100.0f);
+            shader.setUniformMat4f("model", model);
+            shader.setUniformMat4f("view", view);
+            shader.setUniformMat4f("projection", projection);
 
             ImGui::Begin("settings");
             ImGui::SliderFloat("visibility", &f, 0.0f, 1.0f);      
             
-            ImGui::Text("Translation : ");
-            ImGui::SliderFloat("X : ", &x, -1.0f, 1.0f);           
-            ImGui::SliderFloat("Y : ", &y, -1.0f, 1.0f);            
-            ImGui::SliderFloat("Z : ", &z, -1.0f, 1.0f);  
-            // Check if "s" key is pressed
-            if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-                // Code to handle "s" key press
-                x = x - 0.001;
-                // This block will be executed while the "s" key is held down
-            }
-            if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-                // Code to handle "s" key press
-                x = x + 0.001;
-                // This block will be executed while the "s" key is held down
-            }
-            translation = glm::translate(translation, glm::vec3(x, y, z));
-            ImGui::Text("Rotation : ");
-            ImGui::SliderFloat("Degree : ", &RotationDegree, 0.0f, 360.0f);
-            translation = glm::rotate(translation, glm::radians(RotationDegree), glm::vec3(0.0, 0.0, 1.0));
-            ImGui::Text("Scaling : ");
-            ImGui::SliderFloat("X2 : ", &x2, -1.0f, 1.0f);            
-            ImGui::SliderFloat("Y2 : ", &y2, -1.0f, 1.0f);            
-            ImGui::SliderFloat("Z2 : ", &z2, -1.0f, 1.0f);
-            // Check if "s" key is pressed
-            if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-                // Code to handle "s" key press
-                x2 = x2 -0.001;
-                y2 = y2 -0.001;
-                z2 = z2 -0.001;
-                // This block will be executed while the "s" key is held down
-            }
-            if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-                // Code to handle "s" key press
-                x2 = x2 + 0.001;
-                y2 = y2 + 0.001;
-                z2 = z2 + 0.001;
-                // This block will be executed while the "s" key is held down
-            }
-                translation = glm::scale(translation, glm::vec3(x2-0.01, y2-0.01, z2-0.01));
 
-            shader.setUniformMat4f("transform", translation);
+            shader.setUniformFloat("visibility", f);
+
             ImGui::Text("Background Color : ");
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

@@ -23,7 +23,7 @@ public:
 
 
 
-	static void Draw(const VAO& vao,const EBO& ebo,Shader& shader) ;
+	static void Draw(const VAO& vao,const EBO* ebo,Shader& shader) ;
 	static void Clear();
 
 

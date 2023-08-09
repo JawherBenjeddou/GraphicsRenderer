@@ -14,6 +14,9 @@ public:
 	void Unbind() const;
 
 	inline uint32_t getCount() const { return m_Count; }
+
+	bool isValid() const;
+
 private:
 	uint32_t m_ID;
 	uint32_t m_Count;

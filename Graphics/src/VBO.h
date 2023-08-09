@@ -5,12 +5,17 @@
 class VBO {
 
 public:
-	VBO(const void* DATA, uint32_t size);
+	VBO();
 	~VBO();
 
 	//BIND AND UNBIND BUFFERS
 	void Bind() const;
 	void Unbind() const;
+
+	void BufferSubData(uint32_t offset, uint32_t size, const void* data);
+
+	void BufferData(uint32_t size, const void* data);
+
 private:
 	uint32_t m_ID;
 };
