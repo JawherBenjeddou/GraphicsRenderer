@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;C:\Dev\Graphics\Graphics\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;C:\Dev\Graphics\Graphics\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;C:\Dev\Graphics\Graphics\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,7 +143,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;C:\Dev\Graphics\Graphics\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

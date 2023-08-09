@@ -966,8 +966,6 @@
   <ItemGroup>
     <None Include="src\shaders\Frag.glsl" />
     <None Include="src\shaders\Vert.glsl" />
-    <None Include="shaders\Frag.glsl" />
-    <None Include="shaders\Vert.glsl" />
     <None Include="vendor\GLM\glm\detail\func_common.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -1376,5 +1374,7 @@
     <None Include="vendor\GLM\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="shaders\Vert.glsl" />
+    <None Include="shaders\Frag.glsl" />
   </ItemGroup>
 </Project>
