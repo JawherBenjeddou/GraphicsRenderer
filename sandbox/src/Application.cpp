@@ -109,14 +109,6 @@ int main(int argc, char* argv[])
     glEnableVertexAttribArray(1);
 
 
-    //// Print the translation matrix
-    //for (int i = 0; i < 4; ++i) {
-    //    for (int j = 0; j < 4; ++j) {
-    //        std::cout << test[i][j] << " ";
-    //    }
-    //    std::cout << std::endl;
-    //}
-
     Texture texture("../assets/textures/J.png");
     Texture texturesmile("../assets/textures/face.png");
     texturesmile.Bind(0);
