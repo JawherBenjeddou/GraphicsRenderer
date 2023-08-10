@@ -9,7 +9,8 @@
 #include "Texture.h"
 #include "Renderer.h"
 
-
+float deltaTime = 0.0f; // Time between current frame and last frame
+float lastFrame = 0.0f; // Time of last frame
 
 
 // settings
@@ -18,13 +19,13 @@ const uint32_t SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[])
 {
-    GLFWwindow* window;
-
-    /* Initialize the library */
+// -----------------------------------------------------------------------------
+//                             GLFW Initialization
+// -----------------------------------------------------------------------------
     if (!glfwInit())
         return -1;
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Graphics", NULL, NULL);
+    auto window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Graphics", NULL, NULL);
     if (!window)
     {
         std::cerr << " Window creation ERROR";
@@ -37,6 +38,7 @@ int main(int argc, char* argv[])
     {
         std::cerr << " Error initializing glew";
     }
+    
 
     //OPENGL CURRENT VERSION
     const unsigned char* version = glGetString(GL_VERSION);
@@ -137,16 +139,26 @@ int main(int argc, char* argv[])
     };
 
 
-   
+   float angle = 0.0f;
     float f = 1.0f;
     ImVec4 clear_color = ImVec4(0.39f, 0.22f, 0.39f, 1.00f);
     glEnable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    /* Loop until the user closes the window */
+
+// -----------------------------------------------------------------------------
+//                               Main Loop
+// -----------------------------------------------------------------------------
+ 
+   
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 cameraRight = glm::vec3(1.0f, 0.0f, 0.0f);
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
+
         GLCall(glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w));
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         vao.Bind();
@@ -158,16 +170,23 @@ int main(int argc, char* argv[])
 
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, static_cast<float>(glfwGetTime())* glm::radians(angle),glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::rotate(model, static_cast<float>(glfwGetTime())* glm::radians(45.0f),glm::vec3(1.0f, 0.0f,1.0f));
             shader.setUniformMat4f("model", model);
             GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
         }
+        float cameraSpeed = 4.0f * deltaTime;
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            cameraPos += cameraSpeed * cameraFront;
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            cameraPos -= cameraSpeed * cameraFront;
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            cameraPos -= glm::normalize(cameraRight) * cameraSpeed;
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            cameraPos += glm::normalize(cameraRight) * cameraSpeed;
         //// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
-            static int counter = 0;
-            
-            glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+       
+            glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
             glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f,100.0f);
             
             shader.setUniformMat4f("view", view);
@@ -182,6 +201,7 @@ int main(int argc, char* argv[])
             ImGui::Text("Background Color : ");
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            ImGui::Text("Delta Time : %.6f s ", deltaTime);
             ImGui::End();
         }
         
@@ -190,12 +210,15 @@ int main(int argc, char* argv[])
 
 
 
-
+    
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
         /* poll for and process events */
         glfwPollEvents();
-
+        //CALCULATING TIME BETWEEN EACH FRAMES
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
     }
 
 

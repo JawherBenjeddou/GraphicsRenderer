@@ -1,12 +1,12 @@
 #version 460 core
 
-layout (location = 0) in vec3 aPos;
+layout (location = 0) in vec3 aPos; //IN LOCAL COORDINATE SYSTEMS
 layout (location = 1) in vec2 aTexture;
 
 out vec4 color;
 out vec2 texCoord;
 
-uniform mat4 model;
+uniform mat4 model; 
 uniform mat4 view;
 uniform mat4 projection;
 
