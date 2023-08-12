@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,7 +146,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SceneCamera.cpp" />
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\ImGuiLayer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -177,9 +178,11 @@
     <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SceneCamera.h" />
     <ClInclude Include="src\DebugUtils.h" />
     <ClInclude Include="src\EBO.h" />
     <ClInclude Include="src\ImGuiLayer.h" />
+    <ClInclude Include="src\MainLoop.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
