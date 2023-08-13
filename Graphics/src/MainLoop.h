@@ -49,42 +49,56 @@ namespace Graphics {
         //OPENGL CURRENT VERSION
         const unsigned char* version = glGetString(GL_VERSION);
         std::cout << "OpenGL version: " << version << std::endl;
-
+        
+        
+        
+        //CLASSES INSTANCES
         Shader shader;
+        SceneCamera camera;
+
+
 
         float vertices[] = {
          -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
          0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
          0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
          0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+
          -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
          -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
          -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
          0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+
          0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
          0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
          -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
          -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+
          -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
          -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
          -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
          -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+
          -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
          -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
          0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
          0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+
          0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
          0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
          0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
          0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+
          -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
          0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
          0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
          0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+
          -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
          -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
          -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
          0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+
          0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
          0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
          -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
@@ -155,7 +169,7 @@ namespace Graphics {
         // -----------------------------------------------------------------------------
         
 
-        SceneCamera camera;
+        
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
@@ -195,7 +209,7 @@ namespace Graphics {
                 shader.setUniformFloat("visibility", f);
 
                 ImGui::Text("Background Color : ");
-                ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+                ImGui::ColorEdit3("clear color",(float*)(&clear_color)); // Edit 3 floats representing a color
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
                 ImGui::End();
@@ -206,7 +220,7 @@ namespace Graphics {
 
 
 
-            float currentFrame = glfwGetTime();
+            float currentFrame = static_cast<float>(glfwGetTime());
             DeltaTime = currentFrame - LastFrame;
             LastFrame = currentFrame;
             /* Swap front and back buffers */

@@ -4,11 +4,12 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "GLFW/glfw3.h"
 
+
+const float MovementSpeed = 2.5f;
+
 class SceneCamera {
 public:
 	SceneCamera();
-
-	~SceneCamera();
 
 	glm::mat4 getViewMatrix() const;
 
