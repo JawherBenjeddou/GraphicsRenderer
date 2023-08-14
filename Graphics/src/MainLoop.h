@@ -197,7 +197,7 @@ namespace Graphics {
 
                 camera.processKeyboardInput(window, DeltaTime);
 
-                glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+                glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 500.0f);
 
                 shader.setUniformMat4f("view", camera.getViewMatrix());
                 shader.setUniformMat4f("projection", projection);
@@ -217,7 +217,6 @@ namespace Graphics {
 
 
             GuiSetup::RenderImGuiElements();
-
 
 
             float currentFrame = static_cast<float>(glfwGetTime());
