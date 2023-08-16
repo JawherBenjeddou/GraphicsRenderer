@@ -16,5 +16,7 @@ public:
 
 private:
 	uint32_t m_ID;
-	int m_Width,m_Height,m_nrChannels;
+	int32_t m_Width;
+	int32_t m_Height; 
+	int32_t m_nrChannels;
 };

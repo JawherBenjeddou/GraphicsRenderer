@@ -10,14 +10,11 @@
 #include "Texture.h"
 #include "Renderer.h"
 #include "SceneCamera.h"
+#include "GameTimer.h"
+
 // settings
 static const uint32_t SCREEN_WIDTH = 800;
 static const uint32_t SCREEN_HEIGHT = 600;
-
-
-float DeltaTime = 0.0f; // Time between current frame and last frame
-float LastFrame = 0.0f; // Time of last frame
-
 
 
 namespace Graphics {
@@ -55,7 +52,7 @@ namespace Graphics {
         //CLASSES INSTANCES
         Shader shader;
         SceneCamera camera;
-
+        GameTimer Timer;
 
 
         float vertices[] = {
@@ -146,7 +143,7 @@ namespace Graphics {
 
         glm::vec3 cubePositions[] =
         {
-         glm::vec3(0.0f, 0.0f, -5.0f),
+         glm::vec3(0.0f, 0.0f, 0.0f),
          glm::vec3(2.0f, 5.0f, -15.0f),
          glm::vec3(-1.5f, -2.2f, -2.5f),
          glm::vec3(-3.8f, -2.0f, -12.3f),
@@ -167,9 +164,10 @@ namespace Graphics {
         // -----------------------------------------------------------------------------
         //                               Main Loop
         // -----------------------------------------------------------------------------
-        
-
-        
+       
+        float sens = 0.1f;
+        float rotation = 0.0f;
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
@@ -181,31 +179,38 @@ namespace Graphics {
             Renderer::Draw(vao, nullptr, shader);
             GuiSetup::Begin();
 
-            //SPAWN MORE CUBES AND ROTATE THEM
+            ////SPAWN MORE CUBES AND ROTATE THEM
             for (size_t i = 0; i < 10; i++)
             {
+ 
 
                 glm::mat4 model = glm::mat4(1.0f);
+                model = glm::rotate(model,  rotation, glm::vec3(1.0f, 0.0f, 0.0f));
                 model = glm::translate(model, cubePositions[i]);
-                model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 1.0f));
                 shader.setUniformMat4f("model", model);
                 GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
+
             }
+            // Get current mouse position
+            double mouseX, mouseY;
+            glfwGetCursorPos(window, &mouseX, &mouseY);
+            glm::vec2 newMousePosition(static_cast<float>(mouseX), static_cast<float>(mouseY));
+            
+            // Update camera orientation based on mouse input
+            camera.MouseRotation(newMousePosition);
 
             //// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
             {
 
-                camera.processKeyboardInput(window, DeltaTime);
-
-                glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 500.0f);
+                camera.ProcessKeyboardInput(window,Timer.DeltaTime());
 
                 shader.setUniformMat4f("view", camera.getViewMatrix());
-                shader.setUniformMat4f("projection", projection);
+                shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 
                 ImGui::Begin("settings");
                 ImGui::SliderFloat("visibility", &f, 0.0f, 1.0f);
-
-
+                ImGui::SliderFloat("Mouse Sensitivity", &sens, 0.0f, 1.0f);
+                camera.setMouseSensitivity(sens);
                 shader.setUniformFloat("visibility", f);
 
                 ImGui::Text("Background Color : ");
@@ -217,11 +222,8 @@ namespace Graphics {
 
 
             GuiSetup::RenderImGuiElements();
-
-
-            float currentFrame = static_cast<float>(glfwGetTime());
-            DeltaTime = currentFrame - LastFrame;
-            LastFrame = currentFrame;
+ 
+            Timer.Tick();
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
             /* poll for and process events */

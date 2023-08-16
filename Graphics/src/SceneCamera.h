@@ -3,7 +3,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "GLFW/glfw3.h"
-
+#include <iostream>
 
 const float MovementSpeed = 2.5f;
 
@@ -13,11 +13,20 @@ public:
 
 	glm::mat4 getViewMatrix() const;
 
-	void mouseUpdate(const glm::vec2& newMousePostion);
+	glm::mat4 getProjectionMatrix() const;
 
-	void processKeyboardInput(GLFWwindow* window,float DeltaTime);
+	void MouseRotation(const glm::vec2& newMousePostion);
+
+	void ProcessKeyboardInput(GLFWwindow* window,float DeltaTime);
+
+	void setMouseSensitivity(float NewSens);
+
 private: 
-	glm::vec3 position;
-	glm::vec3 ViewDirection;
-	const glm::vec3 up;
+	glm::vec3 m_position;
+	glm::vec3 m_ViewDirection;
+	const glm::vec3 m_up;
+	float m_MouseSensitivity = 0.1f;
+	glm::vec2 m_LastMousePosition;
+	float m_Yaw = -90.0f;
+	float m_Pitch = 45.0f;
 };

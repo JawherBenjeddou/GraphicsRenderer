@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameTimer.cpp" />
     <ClCompile Include="src\SceneCamera.cpp" />
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\ImGuiLayer.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameTimer.h" />
     <ClInclude Include="src\SceneCamera.h" />
     <ClInclude Include="src\DebugUtils.h" />
     <ClInclude Include="src\EBO.h" />
