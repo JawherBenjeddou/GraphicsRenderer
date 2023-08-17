@@ -11,10 +11,8 @@
 #include "Renderer.h"
 #include "SceneCamera.h"
 #include "GameTimer.h"
+#include "Screen.h"
 
-// settings
-static const uint32_t SCREEN_WIDTH = 800;
-static const uint32_t SCREEN_HEIGHT = 600;
 
 
 namespace Graphics {
@@ -25,31 +23,11 @@ namespace Graphics {
         // -----------------------------------------------------------------------------
         //                             GLFW Initialization
         // -----------------------------------------------------------------------------
-        if (!glfwInit())
-            return ;
-        /* Create a windowed mode window and its OpenGL context */
-        auto window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Graphics", NULL, NULL);
-        if (!window)
-        {
-            std::cerr << " Window creation ERROR";
-            glfwTerminate();
-            return ;
-        }
-        /* Make the window's context current */
-        glfwMakeContextCurrent(window);
-        if (glewInit() != GLEW_OK)
-        {
-            std::cerr << " Error initializing glew";
-        }
+        Screen screen("Graphics", 800, 600);
 
-
-        //OPENGL CURRENT VERSION
-        const unsigned char* version = glGetString(GL_VERSION);
-        std::cout << "OpenGL version: " << version << std::endl;
-        
-        
-        
-        //CLASSES INSTANCES
+        // -----------------------------------------------------------------------------
+        //                             Classes Initialization
+        // -----------------------------------------------------------------------------
         Shader shader;
         SceneCamera camera;
         GameTimer Timer;
@@ -137,7 +115,7 @@ namespace Graphics {
         shader.setUniformInt("texture2", 1);
 
 
-        GuiSetup::OnAttach(window);
+        GuiSetup::OnAttach(screen.getWindow());
 
 
 
@@ -154,55 +132,45 @@ namespace Graphics {
          glm::vec3(1.5f, 0.2f, -1.5f),
          glm::vec3(-1.3f, 1.0f, -1.5f)
         };
-
+       
         float f = 1.0f;
-        ImVec4 clear_color = ImVec4(0.39f, 0.22f, 0.39f, 1.00f);
-        glEnable(GL_BLEND);
-        glEnable(GL_DEPTH_TEST);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glm::vec4 clear_color = glm::vec4(0.16f, 0.03f, 0.00f, 0.70f);
 
         // -----------------------------------------------------------------------------
         //                               Main Loop
         // -----------------------------------------------------------------------------
-       
+
         float sens = 0.1f;
         float rotation = 0.0f;
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        while (!glfwWindowShouldClose(window))
+        glfwSetInputMode(screen.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        while (!glfwWindowShouldClose(screen.getWindow()))
         {
             /* Render here */
-
-            GLCall(glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w));
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+            screen.Clear(clear_color);
             vao.Bind();
-            Renderer::Clear();
-            Renderer::Draw(vao, nullptr, shader);
             GuiSetup::Begin();
 
             ////SPAWN MORE CUBES AND ROTATE THEM
             for (size_t i = 0; i < 10; i++)
             {
- 
-
-                glm::mat4 model = glm::mat4(1.0f);
-                model = glm::rotate(model,  rotation, glm::vec3(1.0f, 0.0f, 0.0f));
-                model = glm::translate(model, cubePositions[i]);
+                glm::mat4 model = glm::translate(glm::mat4(1.0f), cubePositions[i]) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f)) ;
                 shader.setUniformMat4f("model", model);
                 GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
             }
             // Get current mouse position
             double mouseX, mouseY;
-            glfwGetCursorPos(window, &mouseX, &mouseY);
+            glfwGetCursorPos(screen.getWindow(), &mouseX, &mouseY);
             glm::vec2 newMousePosition(static_cast<float>(mouseX), static_cast<float>(mouseY));
-            
+
             // Update camera orientation based on mouse input
             camera.MouseRotation(newMousePosition);
 
             //// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
             {
 
-                camera.ProcessKeyboardInput(window,Timer.DeltaTime());
+                camera.ProcessKeyboardInput(screen.getWindow(), Timer.DeltaTime());
 
                 shader.setUniformMat4f("view", camera.getViewMatrix());
                 shader.setUniformMat4f("projection", camera.getProjectionMatrix());
@@ -214,7 +182,7 @@ namespace Graphics {
                 shader.setUniformFloat("visibility", f);
 
                 ImGui::Text("Background Color : ");
-                ImGui::ColorEdit3("clear color",(float*)(&clear_color)); // Edit 3 floats representing a color
+                ImGui::ColorEdit3("clear color", (float*)(&clear_color)); // Edit 3 floats representing a color
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
                 ImGui::End();
@@ -222,20 +190,22 @@ namespace Graphics {
 
 
             GuiSetup::RenderImGuiElements();
- 
+
+
+            //Updates the DeltaTime
             Timer.Tick();
-            /* Swap front and back buffers */
-            glfwSwapBuffers(window);
+
+
+            /* Swaps front and back buffers */
+            screen.Update();
+
+
             /* poll for and process events */
             glfwPollEvents();
-            //CALCULATING TIME BETWEEN EACH FRAMES
         }
 
 
         //CLEANUP 
         GuiSetup::OnDetach();
-        glfwTerminate();
     }
 }
-
-

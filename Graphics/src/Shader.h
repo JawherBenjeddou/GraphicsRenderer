@@ -1,8 +1,12 @@
 #pragma once
 #include "GL/glew.h"
-#include<iostream>
-#include<fstream>
+
+
+#include <iostream>
+#include <fstream>
 #include <sstream>
+
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -26,9 +30,11 @@ public:
 	
 	void setUniformMat4f(const std::string& name, glm::mat4 Matrix);
 
+	uint32_t getId() { return m_ID; }
+
+private:
 	std::string readShadersCode(const char* filePath);
 
-	uint32_t getId() { return m_ID; }
 private:
 	//PROGRAM ID
 	uint32_t m_ID;

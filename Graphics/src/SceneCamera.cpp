@@ -1,7 +1,7 @@
 #include "SceneCamera.h"
 
 SceneCamera::SceneCamera() :
-    m_position(0.0f, 0.0f, 6.0f),
+    m_position(0.0f, 0.0f, 7.0f),
     m_ViewDirection(0.0f, 0.0f, -1.0f),
     m_up(0.0f, 1.0f, 0.0f),
     m_LastMousePosition(0.0f, 0.0f)
@@ -64,6 +64,5 @@ void SceneCamera::ProcessKeyboardInput(GLFWwindow* window,float DeltaTime)
 		m_position -= glm::normalize(glm::cross(m_ViewDirection, m_up)) * velocity;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		m_position += glm::normalize(glm::cross(m_ViewDirection, m_up)) * velocity;
-	
 }
 

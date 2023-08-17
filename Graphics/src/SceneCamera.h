@@ -1,9 +1,13 @@
 #pragma once
+#include <iostream>
+
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+
+
 #include "GLFW/glfw3.h"
-#include <iostream>
 
 const float MovementSpeed = 2.5f;
 
@@ -28,5 +32,5 @@ private:
 	float m_MouseSensitivity = 0.1f;
 	glm::vec2 m_LastMousePosition;
 	float m_Yaw = -90.0f;
-	float m_Pitch = 45.0f;
+	float m_Pitch = 0.0f;
 };

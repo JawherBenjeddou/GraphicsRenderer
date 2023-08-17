@@ -14,9 +14,4 @@ void Renderer::Draw(const VAO& vao, const EBO* ebo, Shader& shader)
     }
 }
 
-void Renderer::Clear()
-{
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
-}
-
 

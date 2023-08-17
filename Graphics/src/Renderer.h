@@ -1,10 +1,15 @@
 #pragma once
 #include<iostream>
+
+
 #include "VAO.h"
 #include "VBO.h"
 #include "EBO.h"
+
+
 #include "Shader.h"
 #include "DebugUtils.h"
+
 class Renderer {
 
 public:
@@ -24,7 +29,6 @@ public:
 
 
 	static void Draw(const VAO& vao,const EBO* ebo,Shader& shader) ;
-	static void Clear();
 
 
 
