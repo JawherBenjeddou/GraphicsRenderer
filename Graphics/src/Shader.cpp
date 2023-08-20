@@ -1,11 +1,11 @@
 #include "Shader.h"
 
 
-Shader::Shader()
+Shader::Shader(const char* FragPath,const char* VertPath)
 {
 	//Handling Files
-	std::string vShaderCode = readShadersCode("../Graphics/shaders/Vert.glsl");
-	std::string fShaderCode = readShadersCode("../Graphics/shaders/Frag.glsl");
+	std::string vShaderCode = readShadersCode(VertPath);
+	std::string fShaderCode = readShadersCode(FragPath);
 	const char* vCode = vShaderCode.c_str();
 	const char* fCode = fShaderCode.c_str();
 
@@ -95,6 +95,11 @@ void Shader::setUniformInt(const std::string& name, int value) const
 void Shader::setUniformFloat(const std::string& name, float value) const
 {
 	GLCall(glUniform1f(glGetUniformLocation(m_ID, name.c_str()),value));
+}
+
+void Shader::setUniform3Float(const std::string& name, float R,float G,float B) const
+{
+	GLCall(glUniform3f(glGetUniformLocation(m_ID, name.c_str()),R,G,B));
 }
 
 void Shader::setUniformMat4f(const std::string& name,glm::mat4 Matrix)

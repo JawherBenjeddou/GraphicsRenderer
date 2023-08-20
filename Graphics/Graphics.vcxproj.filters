@@ -1397,5 +1397,7 @@
     </None>
     <None Include="shaders\Vert.glsl" />
     <None Include="shaders\Frag.glsl" />
+    <None Include="shaders\LightFrag.glsl" />
+    <None Include="shaders\LightVert.glsl" />
   </ItemGroup>
 </Project>

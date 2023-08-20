@@ -16,7 +16,7 @@ class Shader
 {
 public:
 	//Constructor
-	Shader();
+	Shader(const char* FragPath, const char* VertPath);
 
 	//USE / ACTIVATE SHADER
 	void use();
@@ -28,6 +28,8 @@ public:
 	
 	void setUniformFloat(const std::string& name, float value) const;
 	
+	void setUniform3Float(const std::string& name, float R, float G, float B) const;
+
 	void setUniformMat4f(const std::string& name, glm::mat4 Matrix);
 
 	uint32_t getId() { return m_ID; }

@@ -1,7 +1,6 @@
 #version 460 core
 
 layout (location = 0) in vec3 aPos; //IN LOCAL COORDINATE SYSTEMS
-layout (location = 1) in vec2 aTexture;
 
 uniform mat4 model; 
 uniform mat4 view;
