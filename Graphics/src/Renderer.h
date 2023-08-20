@@ -1,11 +1,9 @@
 #pragma once
 #include<iostream>
 
-
 #include "VAO.h"
 #include "VBO.h"
 #include "EBO.h"
-
 
 #include "Shader.h"
 #include "DebugUtils.h"

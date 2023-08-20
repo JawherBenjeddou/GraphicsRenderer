@@ -1,10 +1,10 @@
 #pragma once
+
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
 #include<iostream>
 #include<vector>
-
 
 #include "ImGuiLayer.h"
 
@@ -16,6 +16,9 @@
 #include "Screen.h"
 
 #include <Windows.h>
+	
+
+
 namespace Graphics {
 
 
@@ -35,133 +38,133 @@ namespace Graphics {
 		GameTimer Timer;
 
 
+		float Lightvertices[]{
+			-0.5f, -0.5f, -0.5f,
+			 0.5f, -0.5f, -0.5f,
+			 0.5f,  0.5f, -0.5f,
+			 0.5f,  0.5f, -0.5f,
+			-0.5f,  0.5f, -0.5f,
+			-0.5f, -0.5f, -0.5f,
+
+			-0.5f, -0.5f,  0.5f,
+			 0.5f, -0.5f,  0.5f,
+			 0.5f,  0.5f,  0.5f,
+			 0.5f,  0.5f,  0.5f,
+			-0.5f,  0.5f,  0.5f,
+			-0.5f, -0.5f,  0.5f,
+
+			-0.5f,  0.5f,  0.5f,
+			-0.5f,  0.5f, -0.5f,
+			-0.5f, -0.5f, -0.5f,
+			-0.5f, -0.5f, -0.5f,
+			-0.5f, -0.5f,  0.5f,
+			-0.5f,  0.5f,  0.5f,
+
+			 0.5f,  0.5f,  0.5f,
+			 0.5f,  0.5f, -0.5f,
+			 0.5f, -0.5f, -0.5f,
+			 0.5f, -0.5f, -0.5f,
+			 0.5f, -0.5f,  0.5f,
+			 0.5f,  0.5f,  0.5f,
+
+			-0.5f, -0.5f, -0.5f,
+			 0.5f, -0.5f, -0.5f,
+			 0.5f, -0.5f,  0.5f,
+			 0.5f, -0.5f,  0.5f,
+			-0.5f, -0.5f,  0.5f,
+			-0.5f, -0.5f, -0.5f,
+
+			-0.5f,  0.5f, -0.5f,
+			 0.5f,  0.5f, -0.5f,
+			 0.5f,  0.5f,  0.5f,
+			 0.5f,  0.5f,  0.5f,
+			-0.5f,  0.5f,  0.5f,
+			-0.5f,  0.5f, -0.5f,
+		};
 		float vertices[] = {
-		 -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-		 0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-		 0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-
-		 -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-		 -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-		 -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-		 0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-
-		 0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-		 0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-		 -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
-		 -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-
-		 -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-		 -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-		 -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-		 -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-
-		 -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-		 -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-		 0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-		 0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-
-		 0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-		 0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-		 0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-
-		 -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-		 0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-		 0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-
-		 -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-		 -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-		 -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-		 0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-
-		 0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-		 0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-		 -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-		 -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
+			// positions // normals // texture coords
+			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+			0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+			-0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+			0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+			-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+			-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+			-0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+			-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+			0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+			0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+			0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+			-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+			-0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
 		};
-		float text[] = {
-			// Texture Coordinates (s, t) 
-		   1.0f, 0.0f,
-		   0.0f, 0.0f,
-		   0.0f, 1.0f,
-		   1.0f, 1.0f,
-		};
-
-		VAO LightVAO;
-		VBO LightVBO;
-
-		LightVBO.BufferData(sizeof(vertices) + sizeof(text), nullptr);
-
-		// Upload vertex data
-		LightVBO.BufferSubData(0, sizeof(vertices), vertices);
-
-		// Upload texture coordinate data
-		LightVBO.BufferSubData(sizeof(vertices), sizeof(text), text);
-
-		// Set up attribute pointers for vertex positions and texture coordinates
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
-		LightVAO.Unbind();
-		LightVBO.Unbind();
-
+		//OBJECTS SHADER
+		//--------------
 		VAO vao;
 		VBO vbo;
-
-		vbo.BufferData(sizeof(vertices) + sizeof(text), nullptr);
-
-		// Upload vertex data
-		vbo.BufferSubData(0, sizeof(vertices), vertices);
-
-		// Upload texture coordinate data
-		vbo.BufferSubData(sizeof(vertices), sizeof(text), text);
-
-		// Set up attribute pointers for vertex positions and texture coordinates
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		vbo.BufferData(sizeof(vertices), vertices);
+		// position attribute
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),(void*)0);
 		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 		vao.Unbind();
 		vbo.Unbind();
-
-
-
-
-
-
-
-
+		//LIGHT SHADER
+		//------------
+		VAO LightVAO;
+		VBO LightVBO;
+		LightVBO.BufferData(sizeof(Lightvertices) , Lightvertices);
+		// position attribute
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+		LightVAO.Unbind();
+		LightVBO.Unbind();
 
 
 		Lightshader.use();
 		Lightshader.setUniform3Float("lightColor", 1.0f, 1.0f, 1.0f);
+
 		shader.use();
 		shader.setUniform3Float("lightColor", 1.0f, 1.0f, 1.0f);
 		shader.setUniform3Float("objectColor", 1.0f, 0.5f, 0.31f);
 
+
 		GuiSetup::OnAttach(screen.getWindow());
 
-		float f = 1.0f;
-		glm::vec4 clear_color = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-
-
-
+		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
 		// -----------------------------------------------------------------------------
 		//                               Main Loop
 		// -----------------------------------------------------------------------------
 	
 
-
 		//Quick Settings
 		float sens = 0.1f;
 		float rotation = 0.0f;
-
+		glm::vec3 Position(4.0f, 2.0f, 0.0f);
 		//To remove cursor from screen
 		glfwSetInputMode(screen.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -178,6 +181,7 @@ namespace Graphics {
 			shader.use();
 			vao.Bind();
 			glm::mat4 model2 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			shader.setUniform3Float("lightCubePos", Position.x,Position.y,Position.z);
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", model2);
@@ -188,13 +192,20 @@ namespace Graphics {
 			// Light Cube Rendering
 			Lightshader.use();
 			LightVAO.Bind();
-			glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(4.0f, 2.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), Position) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			Lightshader.setUniformMat4f("view", camera.getViewMatrix());
 			Lightshader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			Lightshader.setUniformMat4f("model", model);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
-
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
+				Position.y += 0.1;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+				Position.y -= 0.1;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
+				Position.x -= 0.1;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+				Position.x += 0.1;
 			// Get current mouse position
 			double mouseX, mouseY;
 			glfwGetCursorPos(screen.getWindow(), &mouseX, &mouseY);
@@ -209,13 +220,11 @@ namespace Graphics {
 
 			ImGui::Begin("settings");
 
-			ImGui::SliderFloat("visibility", &f, 0.0f, 1.0f);
-
+	
 			ImGui::SliderFloat("Mouse Sensitivity", &sens, 0.0f, 1.0f);
 
 			camera.setMouseSensitivity(sens);
 
-			Lightshader.setUniformFloat("visibility", f);
 
 			ImGui::Text("Background Color : ");
 
@@ -236,7 +245,11 @@ namespace Graphics {
 			/* poll for and process events */
 			glfwPollEvents();
 		}
-		//CLEANUP 
+
+
+
+		//Free all resources allocated by imgui
+		//-------------------------------------
 		GuiSetup::OnDetach();
 	}
 }

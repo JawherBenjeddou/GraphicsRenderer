@@ -1,9 +1,6 @@
 #include "GameTimer.h"
 
 
-
-
-
 GameTimer::GameTimer() :
 	m_DeltaTime(0),
 	m_LastFrame(0.0f),

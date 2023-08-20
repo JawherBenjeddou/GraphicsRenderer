@@ -1,15 +1,12 @@
 #pragma once
 #include <iostream>
 
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-
 #include "GLFW/glfw3.h"
 
-const float MovementSpeed = 2.5f;
 
 class SceneCamera {
 public:
@@ -33,4 +30,5 @@ private:
 	glm::vec2 m_LastMousePosition;
 	float m_Yaw = -90.0f;
 	float m_Pitch = 0.0f;
+	const float MovementSpeed = 10.0f;
 };

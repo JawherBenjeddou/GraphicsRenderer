@@ -1,6 +1,7 @@
 #include "Texture.h"
 #include"stb/stb_image.h"
 #include "DebugUtils.h"
+
 Texture::Texture(const char* PATH)
 {
 	GLCall(glGenTextures(1, &m_ID));
