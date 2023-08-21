@@ -165,6 +165,7 @@ namespace Graphics {
 		float sens = 0.1f;
 		float rotation = 0.0f;
 		glm::vec3 Position(4.0f, 2.0f, 0.0f);
+		glm::vec3 Position2(0.0f, 0.0f, 0.0f);
 		//To remove cursor from screen
 		glfwSetInputMode(screen.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -180,7 +181,7 @@ namespace Graphics {
 			// Object Rendering
 			shader.use();
 			vao.Bind();
-			glm::mat4 model2 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), static_cast<float>(glfwGetTime()) * 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
 			shader.setUniform3Float("lightCubePos", Position.x,Position.y,Position.z);
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
@@ -192,20 +193,28 @@ namespace Graphics {
 			// Light Cube Rendering
 			Lightshader.use();
 			LightVAO.Bind();
-			glm::mat4 model = glm::translate(glm::mat4(1.0f), Position) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), Position) *  glm::rotate(glm::mat4(1.0f),  45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			Lightshader.setUniformMat4f("view", camera.getViewMatrix());
 			Lightshader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			Lightshader.setUniformMat4f("model", model);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-				Position.y += 0.1;
+				Position.y += 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
-				Position.y -= 0.1;
+				Position.y -= 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-				Position.x -= 0.1;
+				Position.x -= 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
-				Position.x += 0.1;
+				Position.x += 0.1f;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_I) == GLFW_PRESS)
+				Position2.y += 0.1f;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_K) == GLFW_PRESS)
+				Position2.y -= 0.1f;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_L) == GLFW_PRESS)
+				Position2.x -= 0.1f;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_J) == GLFW_PRESS)
+				Position2.x += 0.1f;
 			// Get current mouse position
 			double mouseX, mouseY;
 			glfwGetCursorPos(screen.getWindow(), &mouseX, &mouseY);
