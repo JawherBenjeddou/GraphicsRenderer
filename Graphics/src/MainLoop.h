@@ -37,7 +37,6 @@ namespace Graphics {
 		SceneCamera camera;
 		GameTimer Timer;
 
-
 		float Lightvertices[]{
 			-0.5f, -0.5f, -0.5f,
 			 0.5f, -0.5f, -0.5f,
