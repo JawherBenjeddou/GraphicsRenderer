@@ -1,50 +1,52 @@
 #version 460 core
 out vec4 FragColor;
 
-uniform vec3 objectColor;
 uniform vec3 lightColor;
 
 in vec3 Normal;
 in vec3 FragPos;
 
-uniform vec3 lightCubePos;
 uniform vec3 camerapos;
 
+struct Material{
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+	float shininess;
+};
 
+struct Light {
+	vec3 position;
+	
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+uniform Light light;
+uniform Material material;
 
 void main()
 {
-	//Ambient
-	//-------
-	float ambientStrength = 0.1f;
-	vec3 ambient = ambientStrength * lightColor;
-
+	// ambient
+	vec3 ambient = light.ambient * material.ambient  ;
 	
-
-	//Diffuse
-	//--------
+	// diffuse
 	vec3 norm = normalize(Normal);
-	vec3 lightDir = normalize(lightCubePos - FragPos);
-	float diff = max(dot(norm, lightDir), 0.0f);
-	vec3 diffuse = diff * lightColor;
+	vec3 lightDir = normalize(light.position - FragPos);
+	float diff = max(dot(norm, lightDir), 0.0);
 
-	//Specular
-	//--------
-	float specularStrength = 0.5f;
-	//View direction from the camera to the object
-	vec3 viewdir = normalize(camerapos - FragPos); 
-	// We negate the light direction bcs reflet() expect the first vector to point from the light  src towards fragments pos
-	vec3 reflectDir = reflect(-lightDir,norm);
-	//Calculate the specular light angle using dot product 
-	//32 value is the shininess of the highlight (the higher the lower the impact)
-	float specular = pow(max(dot(viewdir, reflectDir), 0.0), 32);
-
-	vec3 spec = specular * specularStrength * lightColor;
-
+	//Changed the lightcolor from the vec3 to the struct for all lighting
+	vec3 diffuse = light.diffuse * (diff * material.diffuse);
 	
-
-	//Final Result
-	//------------
-	vec3 result = (ambient + diffuse + spec ) * objectColor;
+	// specular
+	vec3 viewDir = normalize(camerapos - FragPos);
+	vec3 reflectDir = reflect(-lightDir, norm);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0),
+	material.shininess);
+	vec3 specular = light.specular * (spec * material.specular);
+	
+	
+	vec3 result = ambient + diffuse + specular;
 	FragColor = vec4(result, 1.0);
 }

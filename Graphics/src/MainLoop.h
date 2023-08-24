@@ -168,7 +168,7 @@ namespace Graphics {
 		//Quick Settings
 		float sens = 0.1f;
 		float rotation = 0.0f;
-		glm::vec3 LightPos(4.0f, 2.0f, 0.0f);
+		glm::vec3 LightPos(4.0f, 2.0f, 3.0f);
 		glm::vec3 Position2(0.0f, 0.0f, 0.0f);
 		//To remove cursor from screen
 		glfwSetInputMode(screen.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -187,12 +187,18 @@ namespace Graphics {
 			shader.use();
 			vao.Bind();
 			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), /*static_cast<float>(glfwGetTime()) * */0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-			shader.setUniform3Float("lightCubePos", LightPos.x,LightPos.y,LightPos.z);
+			shader.setUniform3Float("light.position", LightPos.x,LightPos.y,LightPos.z);
 			shader.setUniform3Float("camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", model2);
-
+			shader.setUniform3Float("material.ambient", 1.0f, 0.5f, 0.31f);
+			shader.setUniform3Float("material.diffuse", 1.0f, 0.5f, 0.31f);
+			shader.setUniform3Float("material.specular", 0.5f, 0.5f, 0.5f);
+			shader.setUniformFloat("material.shininess", 32.0f);
+			shader.setUniform3Float("light.ambient", 0.2f, 0.2f, 0.2f);
+			shader.setUniform3Float("light.diffuse", 0.5f, 0.5f, 0.5f); // darkened
+			shader.setUniform3Float("light.specular", 1.0f, 1.0f, 1.0f);
 			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model2)));
 			shader.setUniformMat4f("normalMatrix", normalMatrix);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
