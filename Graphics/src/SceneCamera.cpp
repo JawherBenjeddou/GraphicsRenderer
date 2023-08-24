@@ -66,3 +66,12 @@ void SceneCamera::ProcessKeyboardInput(GLFWwindow* window,float DeltaTime)
 		m_position += glm::normalize(glm::cross(m_ViewDirection, m_up)) * velocity;
 }
 
+glm::vec3 SceneCamera::getViewDirection()
+{
+    return m_ViewDirection;
+}
+
+glm::vec3 SceneCamera::getCameraPosition()
+{
+    return m_position;
+}

@@ -8,6 +8,7 @@
 #include "GLFW/glfw3.h"
 
 
+
 class SceneCamera {
 public:
 	SceneCamera();
@@ -22,6 +23,9 @@ public:
 
 	void setMouseSensitivity(float NewSens);
 
+	glm::vec3 getViewDirection();
+
+	glm::vec3 getCameraPosition();
 private: 
 	glm::vec3 m_position;
 	glm::vec3 m_ViewDirection;
@@ -30,5 +34,5 @@ private:
 	glm::vec2 m_LastMousePosition;
 	float m_Yaw = -90.0f;
 	float m_Pitch = 0.0f;
-	const float MovementSpeed = 10.0f;
+	const float MovementSpeed = 8.0f;
 };

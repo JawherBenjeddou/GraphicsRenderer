@@ -3,6 +3,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+
 #include<iostream>
 #include<vector>
 
@@ -16,8 +17,6 @@
 #include "Screen.h"
 
 #include <Windows.h>
-	
-
 
 namespace Graphics {
 
@@ -27,7 +26,7 @@ namespace Graphics {
 		// -----------------------------------------------------------------------------
 		//                             GLFW Initialization
 		// -----------------------------------------------------------------------------
-		Screen screen("Graphics", 800, 600);
+		Screen screen("Graphics", 900, 600);
 
 		// -----------------------------------------------------------------------------
 		//                             Classes Initialization
@@ -36,6 +35,7 @@ namespace Graphics {
 		Shader Lightshader("../Graphics/shaders/LightFrag.glsl", "../Graphics/shaders/LightVert.glsl");
 		SceneCamera camera;
 		GameTimer Timer;
+	
 
 		float Lightvertices[]{
 			-0.5f, -0.5f, -0.5f,
@@ -137,8 +137,8 @@ namespace Graphics {
 		vao.Unbind();
 		vbo.Unbind();
 		//LIGHT SHADER
-		//------------
-		VAO LightVAO;
+		//------------ 
+		VAO LightVAO; 
 		VBO LightVBO;
 		LightVBO.BufferData(sizeof(Lightvertices) , Lightvertices);
 		// position attribute
@@ -168,7 +168,7 @@ namespace Graphics {
 		//Quick Settings
 		float sens = 0.1f;
 		float rotation = 0.0f;
-		glm::vec3 Position(4.0f, 2.0f, 0.0f);
+		glm::vec3 LightPos(4.0f, 2.0f, 0.0f);
 		glm::vec3 Position2(0.0f, 0.0f, 0.0f);
 		//To remove cursor from screen
 		glfwSetInputMode(screen.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -181,12 +181,14 @@ namespace Graphics {
 
 			GuiSetup::Begin();
 
+			
 
 			// Object Rendering
 			shader.use();
 			vao.Bind();
-			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), static_cast<float>(glfwGetTime())  *  0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
-			shader.setUniform3Float("lightCubePos", Position.x,Position.y,Position.z);
+			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), /*static_cast<float>(glfwGetTime()) * */0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			shader.setUniform3Float("lightCubePos", LightPos.x,LightPos.y,LightPos.z);
+			shader.setUniform3Float("camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", model2);
@@ -200,20 +202,20 @@ namespace Graphics {
 			// Light Cube Rendering
 			Lightshader.use();
 			LightVAO.Bind();
-			glm::mat4 model = glm::translate(glm::mat4(1.0f), Position) *  glm::rotate(glm::mat4(1.0f),  45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), LightPos) *  glm::rotate(glm::mat4(1.0f),  45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			Lightshader.setUniformMat4f("view", camera.getViewMatrix());
 			Lightshader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			Lightshader.setUniformMat4f("model", model);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-				Position.y += 0.1f;
+				LightPos.y += 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
-				Position.y -= 0.1f;
+				LightPos.y -= 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-				Position.x -= 0.1f;
+				LightPos.x -= 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
-				Position.x += 0.1f;
+				LightPos.x += 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_I) == GLFW_PRESS)
 				Position2.y += 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_K) == GLFW_PRESS)
@@ -231,7 +233,6 @@ namespace Graphics {
 			camera.MouseRotation(newMousePosition);
 			// Update Keyboard Movement based on the input
 			camera.ProcessKeyboardInput(screen.getWindow(), Timer.DeltaTime());
-
 
 
 			ImGui::Begin("settings");
