@@ -1,7 +1,6 @@
 #version 460 core
 out vec4 FragColor;
 
-uniform vec3 lightColor;
 
 in vec3 Normal;
 in vec3 FragPos;

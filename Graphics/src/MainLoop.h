@@ -26,7 +26,7 @@ namespace Graphics {
 		// -----------------------------------------------------------------------------
 		//                             GLFW Initialization
 		// -----------------------------------------------------------------------------
-		Screen screen("Graphics", 900, 600);
+		Screen screen("Graphics", 1200, 900);
 
 		// -----------------------------------------------------------------------------
 		//                             Classes Initialization
@@ -180,8 +180,24 @@ namespace Graphics {
 			screen.Clear(clear_color);
 
 			GuiSetup::Begin();
-
+			glm::vec3 lightColor;
+			lightColor.x = 1.0f;
+			lightColor.y = 1.0f;
+			lightColor.z = 1.0f;
+			glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+			glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+			// Light Cube Rendering
+			Lightshader.use();
+			LightVAO.Bind();
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), LightPos) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			Lightshader.setUniformMat4f("view", camera.getViewMatrix());
+			Lightshader.setUniformMat4f("projection", camera.getProjectionMatrix());
+			Lightshader.setUniformMat4f("model", model);
 			
+			Lightshader.setUniform3Float("light.specular", 1.0f, 1.0f, 1.0f);
+			Lightshader.setUniform3Float("light.ambient", ambientColor.x, ambientColor.y, ambientColor.z);
+			Lightshader.setUniform3Float("light.diffuse", diffuseColor.x, diffuseColor.y, diffuseColor.z);
+			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
 			// Object Rendering
 			shader.use();
@@ -189,30 +205,37 @@ namespace Graphics {
 			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), /*static_cast<float>(glfwGetTime()) * */0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			shader.setUniform3Float("light.position", LightPos.x,LightPos.y,LightPos.z);
 			shader.setUniform3Float("camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+			
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", model2);
+
 			shader.setUniform3Float("material.ambient", 1.0f, 0.5f, 0.31f);
 			shader.setUniform3Float("material.diffuse", 1.0f, 0.5f, 0.31f);
 			shader.setUniform3Float("material.specular", 0.5f, 0.5f, 0.5f);
 			shader.setUniformFloat("material.shininess", 32.0f);
-			shader.setUniform3Float("light.ambient", 0.2f, 0.2f, 0.2f);
-			shader.setUniform3Float("light.diffuse", 0.5f, 0.5f, 0.5f); // darkened
+			
 			shader.setUniform3Float("light.specular", 1.0f, 1.0f, 1.0f);
+			shader.setUniform3Float("light.ambient", ambientColor.x, ambientColor.y, ambientColor.z);
+			shader.setUniform3Float("light.diffuse", diffuseColor.x, diffuseColor.y, diffuseColor.z);
+			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model2)));
 			shader.setUniformMat4f("normalMatrix", normalMatrix);
+			glm::mat4 modelground = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.0f, 3.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 1.0f, 10.0f));
+			shader.setUniformMat4f("view", camera.getViewMatrix());
+			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
+			shader.setUniformMat4f("model", modelground);
+			shader.setUniform3Float("material.ambient", 0.19225, 0.19225f, 0.19225f);
+			shader.setUniform3Float("material.diffuse", 0.50754f, 0.50754f, 0.50754f);
+			shader.setUniform3Float("material.specular", 0.508273f, 0.508273f, 0.508273f);
+			shader.setUniformFloat("material.shininess", 32.0f);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
+		
+			
+			shader.setUniform3Float("light.ambient", ambientColor.x, ambientColor.y, ambientColor.z);
+			shader.setUniform3Float("light.diffuse", diffuseColor.x, diffuseColor.y, diffuseColor.z);
 
-
-
-			// Light Cube Rendering
-			Lightshader.use();
-			LightVAO.Bind();
-			glm::mat4 model = glm::translate(glm::mat4(1.0f), LightPos) *  glm::rotate(glm::mat4(1.0f),  45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-			Lightshader.setUniformMat4f("view", camera.getViewMatrix());
-			Lightshader.setUniformMat4f("projection", camera.getProjectionMatrix());
-			Lightshader.setUniformMat4f("model", model);
-			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
+		
 
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
 				LightPos.y += 0.1f;

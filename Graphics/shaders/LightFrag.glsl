@@ -1,9 +1,17 @@
 #version 460 core
 out vec4 FragColor;
 
-uniform vec3 lightColor;
 
+struct Light {
+	vec3 position;
+	
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+uniform Light light;
 void main()
 {
-	FragColor = vec4(lightColor, 1.0);
+	vec3 LightColor = light.ambient + light.diffuse + light.specular;
+	FragColor = vec4(LightColor, 1.0);
 }
