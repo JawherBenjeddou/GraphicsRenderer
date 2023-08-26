@@ -12,9 +12,11 @@ public:
 
 
 	//BIND AND UNBIND TEXTURE
-	void Bind(int unit) const;
+	void Bind(uint32_t unit = 0) const;
+
 	void Unbind() const;
 
+	uint32_t getID() const;
 private:
 	uint32_t m_ID;
 	int32_t m_Width;

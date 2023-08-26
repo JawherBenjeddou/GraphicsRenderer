@@ -82,12 +82,12 @@ namespace Graphics {
 		};
 		float vertices[] = {
 			// positions // normals // texture coords
-			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-			0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
-			0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
-			0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
-			-0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
-			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, //bottom left
+			0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, //bottom right
+			0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, //top right
+			0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f, //top right
+			-0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, // top right
+			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, //bottom left
 			
 			-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 			0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
@@ -134,6 +134,8 @@ namespace Graphics {
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glEnableVertexAttribArray(2);
 		vao.Unbind();
 		vbo.Unbind();
 		//LIGHT SHADER
@@ -154,8 +156,8 @@ namespace Graphics {
 		shader.use();
 		shader.setUniform3Float("lightColor", 1.0f, 1.0f, 1.0f);
 		shader.setUniform3Float("objectColor", 1.0f, 0.5f, 0.31f);
-
-
+		
+		
 		GuiSetup::OnAttach(screen.getWindow());
 
 		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
@@ -163,8 +165,10 @@ namespace Graphics {
 		// -----------------------------------------------------------------------------
 		//                               Main Loop
 		// -----------------------------------------------------------------------------
-	
-
+		Texture texture("../assets/textures/container2.png");
+		Texture texture2("../assets/textures/container2_specular.png");
+		texture.Bind(0);
+		//texture2.Bind(1);
 		//Quick Settings
 		float sens = 0.1f;
 		float rotation = 0.0f;
@@ -186,6 +190,7 @@ namespace Graphics {
 			lightColor.z = 1.0f;
 			glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 			glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+			//glm::vec3 result = diffuseColor + ambientColor + lightColor;
 			// Light Cube Rendering
 			Lightshader.use();
 			LightVAO.Bind();
@@ -193,50 +198,51 @@ namespace Graphics {
 			Lightshader.setUniformMat4f("view", camera.getViewMatrix());
 			Lightshader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			Lightshader.setUniformMat4f("model", model);
-			
-			Lightshader.setUniform3Float("light.specular", 1.0f, 1.0f, 1.0f);
-			Lightshader.setUniform3Float("light.ambient", ambientColor.x, ambientColor.y, ambientColor.z);
-			Lightshader.setUniform3Float("light.diffuse", diffuseColor.x, diffuseColor.y, diffuseColor.z);
+			Lightshader.setUniform3Float("light.color", 1.0f, 1.0f, 1.0f);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
-			// Object Rendering
+			// Object Rendering (Cube)
 			shader.use();
 			vao.Bind();
 			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), /*static_cast<float>(glfwGetTime()) * */0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 			shader.setUniform3Float("light.position", LightPos.x,LightPos.y,LightPos.z);
 			shader.setUniform3Float("camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
-			
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", model2);
 
-			shader.setUniform3Float("material.ambient", 1.0f, 0.5f, 0.31f);
-			shader.setUniform3Float("material.diffuse", 1.0f, 0.5f, 0.31f);
-			shader.setUniform3Float("material.specular", 0.5f, 0.5f, 0.5f);
-			shader.setUniformFloat("material.shininess", 32.0f);
+			shader.setUniform3Float("material.ambient", 0.25f, 0.20725f, 0.20725f);
+
+			//TEXTURE BINDING
+			shader.setUniformInt("material.diffuseMAP",0);
+
+
+			shader.setUniform3Float("material.specular", 0.296648f, 0.296648f, 0.296648f);
+			shader.setUniformFloat("material.shininess", 32);
 			
-			shader.setUniform3Float("light.specular", 1.0f, 1.0f, 1.0f);
-			shader.setUniform3Float("light.ambient", ambientColor.x, ambientColor.y, ambientColor.z);
-			shader.setUniform3Float("light.diffuse", diffuseColor.x, diffuseColor.y, diffuseColor.z);
+			shader.setUniform3Float("light.ambientStrength", 0.2f, 0.2f, 0.2f);
+			shader.setUniform3Float("light.diffuseStrength", 0.7f, 0.5f, 0.5f); // darkened
+			shader.setUniform3Float("light.specularStrength", 1.0f, 1.0f, 1.0f);
+			//shader.setUniform3Float("light.ambientStrength", 1.0f, 1.0f, 1.0f);
+			//shader.setUniform3Float("light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
+			//shader.setUniform3Float("light.specularStrength", 1.0f, 1.0f, 1.0f);
+
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model2)));
 			shader.setUniformMat4f("normalMatrix", normalMatrix);
+			// Object Rendering (Ground)
 			glm::mat4 modelground = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.0f, 3.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 1.0f, 10.0f));
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", modelground);
-			shader.setUniform3Float("material.ambient", 0.19225, 0.19225f, 0.19225f);
-			shader.setUniform3Float("material.diffuse", 0.50754f, 0.50754f, 0.50754f);
-			shader.setUniform3Float("material.specular", 0.508273f, 0.508273f, 0.508273f);
-			shader.setUniformFloat("material.shininess", 32.0f);
+			shader.setUniform3Float("material.ambient", 0.05375f, 0.05f, 0.06625f);
+			shader.setUniform3Float("material.specular", 0.332741f, 0.328634f, 0.346435f);
+			shader.setUniformFloat("material.shininess", 38.4f);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 		
-			
-			shader.setUniform3Float("light.ambient", ambientColor.x, ambientColor.y, ambientColor.z);
-			shader.setUniform3Float("light.diffuse", diffuseColor.x, diffuseColor.y, diffuseColor.z);
 
 		
-
+			//OBJECT TEMPORARY MOVEMENT
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
 				LightPos.y += 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
@@ -253,6 +259,8 @@ namespace Graphics {
 				Position2.x -= 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_J) == GLFW_PRESS)
 				Position2.x += 0.1f;
+
+
 			// Get current mouse position
 			double mouseX, mouseY;
 			glfwGetCursorPos(screen.getWindow(), &mouseX, &mouseY);

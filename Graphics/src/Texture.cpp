@@ -31,12 +31,17 @@ Texture::~Texture()
 	glDeleteTextures(1, &m_ID);
 }
 
-void Texture::Bind(int unit = 0) const {
-	glActiveTexture(GL_TEXTURE0 + unit);
+void Texture::Bind(uint32_t unit) const {
+	glActiveTexture(GL_TEXTURE0+unit);
 	glBindTexture(GL_TEXTURE_2D, m_ID);
 }
 
 void Texture::Unbind() const
 {
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
+uint32_t Texture::getID() const
+{
+	return m_ID;
 }

@@ -1,6 +1,6 @@
 #include "VAO.h"
 #include "DebugUtils.h"
-VAO::VAO()
+VAO::VAO(): m_ID(0)
 {
 	GLCall(glGenVertexArrays(1, &m_ID));
 	GLCall(glBindVertexArray(m_ID));

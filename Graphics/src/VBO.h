@@ -13,7 +13,7 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
-	void BufferSubData(uint32_t offset, uint32_t size, const void* data);
+	void BufferSubData(uint32_t &offset, uint32_t size, const void* data);
 
 	void BufferData(uint32_t size, const void* data);
 

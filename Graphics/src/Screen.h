@@ -15,7 +15,7 @@ public:
 
     ~Screen();
 
-    void Clear(glm::vec4 color);
+    void Clear(glm::vec4& color);
 
     void Update();
 

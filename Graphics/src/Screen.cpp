@@ -39,7 +39,7 @@ void Screen::initGL() {
     // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void Screen::Clear(glm::vec4 color) {
+void Screen::Clear(glm::vec4& color) {
     GLCall(glClearColor(color.x, color.y,color.z, color.w));
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
