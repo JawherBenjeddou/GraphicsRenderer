@@ -7,8 +7,8 @@ struct Light {
 	
 	vec3 color;
 };
-uniform Light light;
+uniform Light u_light;
 void main()
 {
-	FragColor = vec4(light.color, 1.0);
+	FragColor = vec4(u_light.color, 1.0);
 }

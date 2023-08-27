@@ -32,5 +32,5 @@ private:
 private:
     const char* title;
     int width = 500, height = 600;
-    GLFWwindow* window;
+    GLFWwindow* window = nullptr;
 };

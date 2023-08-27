@@ -6,12 +6,9 @@ in vec3 Normal;
 in vec3 FragPos;
 in vec2 TextPos;
 
-
-uniform vec3 camerapos;
-
 struct Material{
 	sampler2D diffuseMAP; //reference to 2D texture 
-	vec3 specular;
+	sampler2D specularMAP;
 
 	float shininess;
 };
@@ -23,29 +20,29 @@ struct Light {
 	vec3 specularStrength;
 };
 
-uniform Light light;
-uniform Material material;
+uniform vec3 u_camerapos;
+uniform Light u_light;
+uniform Material u_material;
 
 void main()
 {
 	// ambient
-	vec3 ambient = light.ambientStrength * vec3(texture(material.diffuseMAP, TextPos));
+	vec3 ambient = u_light.ambientStrength * vec3(texture(u_material.diffuseMAP, TextPos));
 	
 	// diffuse
 	vec3 norm = normalize(Normal);
-	vec3 lightDir = normalize(light.position - FragPos);
+	vec3 lightDir = normalize(u_light.position - FragPos);
 	float diff = max(dot(norm, lightDir), 0.0);
 
 	//Changed the lightcolor from the vec3 to the struct for all lighting
-	vec3 diffuse = light.diffuseStrength * diff * vec3(texture(material.diffuseMAP,TextPos));
+	vec3 diffuse = u_light.diffuseStrength * diff * vec3(texture(u_material.diffuseMAP,TextPos));
 	
 	// specular
-	vec3 viewDir = normalize(camerapos - FragPos);
+	vec3 viewDir = normalize(u_camerapos - FragPos);
 	vec3 reflectDir = reflect(-lightDir, norm);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0),material.shininess);
-	vec3 specular = light.specularStrength * (spec * material.specular);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0),u_material.shininess);
+	vec3 specular = u_light.specularStrength * (spec * vec3(texture(u_material.specularMAP, TextPos))); //TODO material.specular becomes a sampler2D and bind it to the metal border texture 
 	
 	
-	vec3 result = ambient + diffuse + specular;
-	FragColor = vec4(result, 1.0);
+	FragColor = vec4(ambient + diffuse + specular,1.0);
 }

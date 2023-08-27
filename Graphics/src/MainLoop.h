@@ -166,8 +166,9 @@ namespace Graphics {
 		//                               Main Loop
 		// -----------------------------------------------------------------------------
 		Texture texture("../assets/textures/container2.png");
-		Texture texture2("../assets/textures/container2_specular.png");
+		Texture specular("../assets/textures/container2_specular.png");
 		texture.Bind(0);
+		specular.Bind(1);
 		//texture2.Bind(1);
 		//Quick Settings
 		float sens = 0.1f;
@@ -182,7 +183,6 @@ namespace Graphics {
 			/* Render here */
 
 			screen.Clear(clear_color);
-
 			GuiSetup::Begin();
 			glm::vec3 lightColor;
 			lightColor.x = 1.0f;
@@ -198,46 +198,47 @@ namespace Graphics {
 			Lightshader.setUniformMat4f("view", camera.getViewMatrix());
 			Lightshader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			Lightshader.setUniformMat4f("model", model);
-			Lightshader.setUniform3Float("light.color", 1.0f, 1.0f, 1.0f);
+			Lightshader.setUniform3Float("u_light.color", 1.0f, 1.0f, 1.0f);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
 			// Object Rendering (Cube)
 			shader.use();
 			vao.Bind();
 			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), /*static_cast<float>(glfwGetTime()) * */0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-			shader.setUniform3Float("light.position", LightPos.x,LightPos.y,LightPos.z);
-			shader.setUniform3Float("camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+			shader.setUniform3Float("u_light.position", LightPos.x,LightPos.y,LightPos.z);
+			shader.setUniform3Float("u_camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", model2);
 
-			shader.setUniform3Float("material.ambient", 0.25f, 0.20725f, 0.20725f);
+			shader.setUniform3Float("u_material.ambient", 0.25f, 0.20725f, 0.20725f);
 
 			//TEXTURE BINDING
-			shader.setUniformInt("material.diffuseMAP",0);
-
-
-			shader.setUniform3Float("material.specular", 0.296648f, 0.296648f, 0.296648f);
-			shader.setUniformFloat("material.shininess", 32);
+			shader.setUniformInt("u_material.diffuseMAP",0);
+			shader.setUniformInt("u_material.specularMAP",1);
+			shader.setUniformFloat("u_material.shininess", 32);
 			
-			shader.setUniform3Float("light.ambientStrength", 0.2f, 0.2f, 0.2f);
-			shader.setUniform3Float("light.diffuseStrength", 0.7f, 0.5f, 0.5f); // darkened
-			shader.setUniform3Float("light.specularStrength", 1.0f, 1.0f, 1.0f);
-			//shader.setUniform3Float("light.ambientStrength", 1.0f, 1.0f, 1.0f);
-			//shader.setUniform3Float("light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
-			//shader.setUniform3Float("light.specularStrength", 1.0f, 1.0f, 1.0f);
+
+
+
+			shader.setUniform3Float("u_light.ambientStrength", 0.2f, 0.2f, 0.2f);
+			shader.setUniform3Float("u_light.diffuseStrength", 0.7f, 0.5f, 0.5f); // darkened
+			shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
+			//shader.setUniform3Float("u_light.ambientStrength", 1.0f, 1.0f, 1.0f);
+			//shader.setUniform3Float("u_light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
+			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
 
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model2)));
-			shader.setUniformMat4f("normalMatrix", normalMatrix);
+			shader.setUniformMat4f("u_normalMatrix", normalMatrix);
 			// Object Rendering (Ground)
 			glm::mat4 modelground = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.0f, 3.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 1.0f, 10.0f));
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", modelground);
-			shader.setUniform3Float("material.ambient", 0.05375f, 0.05f, 0.06625f);
-			shader.setUniform3Float("material.specular", 0.332741f, 0.328634f, 0.346435f);
-			shader.setUniformFloat("material.shininess", 38.4f);
+			shader.setUniform3Float("u_material.ambient", 0.05375f, 0.05f, 0.06625f);
+			shader.setUniform3Float("u_material.specular", 0.332741f, 0.328634f, 0.346435f);
+			shader.setUniformFloat("u_material.shininess", 38.4f);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 		
 

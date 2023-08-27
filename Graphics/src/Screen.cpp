@@ -1,10 +1,10 @@
 #include "screen.h"
 
-Screen::Screen(const char* title, int width, int height) {
-    title = title;
-    width = width;
-    height = height;
-
+Screen::Screen(const char* title, int width, int height):
+    title(title),
+    width(width),
+    height(height)
+{
     if (!glfwInit())
         return;
     /* Create a windowed mode window and its OpenGL context */
