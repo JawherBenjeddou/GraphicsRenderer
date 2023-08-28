@@ -7,6 +7,7 @@
 #include<iostream>
 #include<vector>
 
+
 #include "ImGuiLayer.h"
 
 #include "Shader.h"
@@ -16,7 +17,13 @@
 #include "GameTimer.h"
 #include "Screen.h"
 
-#include <Windows.h>
+#include <ostream>
+#define VEC4F_FMT "[%.9g, %.9g, %.9g, %.9g]"
+#define VEC4_EXP(v) v.x, v.y, v.z
+//std::ostream& operator<<(std::ostream& os,const glm::vec3& vec) {
+//	os << glm::normalize(vec).x << "," << glm::normalize(vec).y << "," << glm::normalize(vec).z;
+//	return os;
+//}
 
 namespace Graphics {
 
@@ -124,6 +131,7 @@ namespace Graphics {
 			-0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
 			-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
 		};
+
 		//OBJECTS SHADER
 		//--------------
 		VAO vao;
@@ -149,7 +157,7 @@ namespace Graphics {
 		LightVAO.Unbind();
 		LightVBO.Unbind();
 
-
+	
 		Lightshader.use();
 		Lightshader.setUniform3Float("lightColor", 1.0f, 1.0f, 1.0f);
 
@@ -177,7 +185,19 @@ namespace Graphics {
 		glm::vec3 Position2(0.0f, 0.0f, 0.0f);
 		//To remove cursor from screen
 		glfwSetInputMode(screen.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
+		// positions all containers
+		glm::vec3 cubePositions[] = {
+			glm::vec3(0.0f,  0.0f,  0.0f),
+			glm::vec3(2.0f,  5.0f, -15.0f),
+			glm::vec3(-1.5f, -2.2f, -2.5f),
+			glm::vec3(-3.8f, -2.0f, -12.3f),
+			glm::vec3(2.4f, -0.4f, -3.5f),
+			glm::vec3(-1.7f,  3.0f, -7.5f),
+			glm::vec3(1.3f, -2.0f, -2.5f),
+			glm::vec3(1.5f,  2.0f, -2.5f),
+			glm::vec3(1.5f,  0.2f, -1.5f),
+			glm::vec3(-1.3f,  1.0f, -1.5f)
+		};
 		while (!glfwWindowShouldClose(screen.getWindow()))
 		{
 			/* Render here */
@@ -190,8 +210,10 @@ namespace Graphics {
 			lightColor.z = 1.0f;
 			glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 			glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-			//glm::vec3 result = diffuseColor + ambientColor + lightColor;
+
+			//POINT LIGHT CUBE
 			// Light Cube Rendering
+			//---------------------
 			Lightshader.use();
 			LightVAO.Bind();
 			glm::mat4 model = glm::translate(glm::mat4(1.0f), LightPos) * glm::rotate(glm::mat4(1.0f), 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -202,46 +224,59 @@ namespace Graphics {
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 
 			// Object Rendering (Cube)
+			//-----------------------
 			shader.use();
 			vao.Bind();
 			glm::mat4 model2 = glm::translate(glm::mat4(1.0f),Position2) * glm::rotate(glm::mat4(1.0f), /*static_cast<float>(glfwGetTime()) * */0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-			shader.setUniform3Float("u_light.position", LightPos.x,LightPos.y,LightPos.z);
-			shader.setUniform3Float("u_camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 			shader.setUniformMat4f("view", camera.getViewMatrix());
 			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
 			shader.setUniformMat4f("model", model2);
-
-			shader.setUniform3Float("u_material.ambient", 0.25f, 0.20725f, 0.20725f);
-
-			//TEXTURE BINDING
-			shader.setUniformInt("u_material.diffuseMAP",0);
+			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model2)));
+			shader.setUniformMat4f("u_normalMatrix", normalMatrix);
+			//TEXTURE BINDING (LIGHTING STUFF)
+			//-------------------------------
+			shader.setUniform3Float("u_camerapos",camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+			glm::vec3 directionalLight(- 1.0f, -1.0f, -1.0f);
+			shader.setUniform3Float("u_light.direction", directionalLight.x, directionalLight.y, directionalLight.z);
+			shader.setUniformInt("u_material.diffuseMAP", 0);
 			shader.setUniformInt("u_material.specularMAP",1);
 			shader.setUniformFloat("u_material.shininess", 32);
-			
-
-
+			shader.setUniform3Float("u_viewdirection", VEC4_EXP(camera.getViewDirection()));
+			shader.setUniform3Float("u_viewposition", VEC4_EXP(camera.getCameraPosition()));
 
 			shader.setUniform3Float("u_light.ambientStrength", 0.2f, 0.2f, 0.2f);
-			shader.setUniform3Float("u_light.diffuseStrength", 0.7f, 0.5f, 0.5f); // darkened
+			shader.setUniform3Float("u_light.diffuseStrength", 0.8f, 0.6f, 0.7f); // darkened
 			shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
+
+			//POINT LIGHT CONFIG
+			//------------------
+			shader.setUniform3Float("u_PointLight.position",LightPos.x, LightPos.y, LightPos.z);
+			shader.setUniformFloat("u_PointLight.constant", 1.0f);
+			shader.setUniformFloat("u_PointLight.linear", 0.0014f);
+			shader.setUniformFloat("u_PointLight.quadratic", 0.000007f);
 			//shader.setUniform3Float("u_light.ambientStrength", 1.0f, 1.0f, 1.0f);
 			//shader.setUniform3Float("u_light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
 			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
-
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
-			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model2)));
-			shader.setUniformMat4f("u_normalMatrix", normalMatrix);
+
+
 			// Object Rendering (Ground)
-			glm::mat4 modelground = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.0f, 3.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 1.0f, 10.0f));
-			shader.setUniformMat4f("view", camera.getViewMatrix());
-			shader.setUniformMat4f("projection", camera.getProjectionMatrix());
+			//-------------------------
+			glm::mat4 modelground = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -3.0f, 3.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 1.0f, 10.0f));
 			shader.setUniformMat4f("model", modelground);
-			shader.setUniform3Float("u_material.ambient", 0.05375f, 0.05f, 0.06625f);
-			shader.setUniform3Float("u_material.specular", 0.332741f, 0.328634f, 0.346435f);
-			shader.setUniformFloat("u_material.shininess", 38.4f);
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 		
+			for (unsigned int i = 0; i < 10; i++)
+			{
+				// calculate the model matrix for each object and pass it to shader before drawing
+				glm::mat4 modelX = glm::mat4(1.0f);
+				modelX = glm::translate(modelX, cubePositions[i]);
+				float angle = 20.0f * i;
+				modelX = glm::rotate(modelX, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+				shader.setUniformMat4f("model", modelX);
 
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+			}
 		
 			//OBJECT TEMPORARY MOVEMENT
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
@@ -249,9 +284,9 @@ namespace Graphics {
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
 				LightPos.y -= 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-				LightPos.x -= 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
 				LightPos.x += 0.1f;
+			if (glfwGetKey(screen.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+				LightPos.x -= 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_I) == GLFW_PRESS)
 				Position2.y += 0.1f;
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_K) == GLFW_PRESS)
