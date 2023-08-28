@@ -252,8 +252,8 @@ namespace Graphics {
 			//------------------
 			shader.setUniform3Float("u_PointLight.position",LightPos.x, LightPos.y, LightPos.z);
 			shader.setUniformFloat("u_PointLight.constant", 1.0f);
-			shader.setUniformFloat("u_PointLight.linear", 0.0014f);
-			shader.setUniformFloat("u_PointLight.quadratic", 0.000007f);
+			shader.setUniformFloat("u_PointLight.linear", 0.07f);
+			shader.setUniformFloat("u_PointLight.quadratic", 0.017f);
 			//shader.setUniform3Float("u_light.ambientStrength", 1.0f, 1.0f, 1.0f);
 			//shader.setUniform3Float("u_light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
 			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);

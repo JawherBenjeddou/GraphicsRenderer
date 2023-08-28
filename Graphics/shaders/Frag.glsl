@@ -46,24 +46,26 @@ void main() {
     float intensity = clamp((cosTheta - outercutoff) / epsilon, 0.0, 1.0);
   
  
-        // Diffuse
-        float diff = max(dot(norm, lightDir), 0.0);
-        vec3 diffuse = u_light.diffuseStrength   * texture(u_material.diffuseMAP, TextPos).rgb;
+    // Diffuse
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = u_light.diffuseStrength   * texture(u_material.diffuseMAP, TextPos).rgb;
 
-        // Specular
-        vec3 viewDir = normalize(u_camerapos - FragPos);
-        vec3 reflectDir = reflect(-lightDir, norm);
-        float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_material.shininess);
-        vec3 specular = u_light.specularStrength * (spec * vec3(texture(u_material.specularMAP, TextPos)));
+    // Specular
+    vec3 viewDir = normalize(u_camerapos - FragPos);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_material.shininess);
+    vec3 specular = u_light.specularStrength * (spec * vec3(texture(u_material.specularMAP, TextPos)));
 
-        // Attenuation
-        float distance = length(u_viewposition - FragPos);
-        float attenuation = 1.0 / (u_PointLight.constant + u_PointLight.linear * distance + u_PointLight.quadratic * (distance * distance));
-  
-        ambient *= attenuation;
-        diffuse *= intensity;
-        specular *= intensity;
+    // Attenuation
+    float distance = length(u_viewposition - FragPos);
+    float attenuation = 1.0 / (u_PointLight.constant + u_PointLight.linear * distance + u_PointLight.quadratic * (distance * distance));
+     diffuse *= intensity;
+    specular *= intensity;
+    ambient *= attenuation;
+    diffuse *= attenuation;
+    specular *= attenuation;
+   
 
-        FragColor = vec4(ambient + diffuse + specular, 1.0);
+    FragColor = vec4(ambient + diffuse + specular, 1.0);
 
 }
