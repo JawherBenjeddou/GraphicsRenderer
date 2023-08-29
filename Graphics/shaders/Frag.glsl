@@ -112,6 +112,8 @@ vec3 CalcPointLight()
 
    return vec3( diffuse + specular);
 }
+
+
 void main() {
 
     vec3 Output = vec3(0.0f);
