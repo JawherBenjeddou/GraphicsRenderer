@@ -33,7 +33,7 @@ namespace Graphics {
 		// -----------------------------------------------------------------------------
 		//                             GLFW Initialization
 		// -----------------------------------------------------------------------------
-		Screen screen("Graphics", 1200, 900);
+		Screen screen("Graphics", 800, 600);
 
 		// -----------------------------------------------------------------------------
 		//                             Classes Initialization
@@ -244,7 +244,7 @@ namespace Graphics {
 			shader.setUniform3Float("u_viewdirection", VEC4_EXP(camera.getViewDirection()));
 			shader.setUniform3Float("u_viewposition", VEC4_EXP(camera.getCameraPosition()));
 
-			shader.setUniform3Float("u_light.ambientStrength", 0.2f, 0.2f, 0.2f);
+			shader.setUniform3Float("u_light.ambientStrength", 0.1f, 0.1f, 0.1f);
 			shader.setUniform3Float("u_light.diffuseStrength", 0.8f, 0.6f, 0.7f); // darkened
 			shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
 
