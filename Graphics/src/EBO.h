@@ -6,7 +6,9 @@
 class EBO {
 
 public:
-	EBO(const void* DATA, uint32_t size,uint32_t count);
+
+	 EBO();
+
 	~EBO();
 
 	//BIND AND UNBIND BUFFERS
@@ -14,11 +16,10 @@ public:
 
 	void Unbind() const;
 
-	inline uint32_t getCount() const { return m_Count; }
-
 	bool isValid() const;
+
+	void BufferData(uint32_t size, const void* data);
 
 private:
 	uint32_t m_ID;
-	uint32_t m_Count;
 };

@@ -2,7 +2,12 @@
 #include"stb/stb_image.h"
 #include "DebugUtils.h"
 
-Texture::Texture(const char* PATH)
+
+
+// @param[in] PATH path of the texture.
+//@param[in] TexType texture type written in form of texture_type where type can be (diffuse or specular).
+Texture::Texture(const char* PATH,std::string TexType):
+	m_TexType(TexType)
 {
 	GLCall(glGenTextures(1, &m_ID));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
@@ -44,4 +49,9 @@ void Texture::Unbind() const
 uint32_t Texture::getID() const
 {
 	return m_ID;
+}
+
+std::string Texture::getType() const
+{
+	return m_TexType;
 }
