@@ -85,16 +85,15 @@ namespace Graphics {
 			{{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
 			{{-0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
 		};
-		std::vector<Texture*> T;
+		std::vector<Texture> T;
 
 
 
 
 		Texture diffuse("../assets/textures/container2.png","texture_diffuse");
 		Texture specular("../assets/textures/container2_specular.png","texture_specular");
-		T.push_back(&diffuse);
-		T.push_back(&specular);
-		
+		T.push_back(std::move(diffuse));
+		T.push_back(std::move(specular));
 		Mesh mesh(cubeVertices, cubeIndices, T);
 
 

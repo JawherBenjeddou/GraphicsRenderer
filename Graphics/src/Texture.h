@@ -6,14 +6,31 @@
 class Texture {
 
 public:
-	Texture(const char* PATH,std::string TexName);
+	Texture(const char* PATH,const std::string& TexName);
+
+	Texture(const Texture& other) = delete; // explicitly delete the copy constructor
+
+	Texture(Texture&& other) noexcept
+		:m_ID(std::move(other.m_ID)),
+		 m_Width(std::move(other.m_Width)),
+		 m_Height(std::move(other.m_Height)),
+		 m_nrChannels(std::move(other.m_nrChannels)),
+		 m_TexType(std::move(other.m_TexType)) 
+	{
+		other.m_ID = 0;
+		other.m_Width = 0;
+		other.m_Height = 0;
+		other.m_nrChannels = 0;
+		other.m_TexType.clear();
+	}
 
 	~Texture();
 
-
-
 	//BIND AND UNBIND TEXTURE
-	void Bind(uint32_t unit = 0) const;
+	//const uint32_t& : this is used so the function accepts l and r values (r value = "0" l value = "i")
+	//bcs using only int& make us unable to use r values
+
+	void Bind(const uint32_t& unit = 0) const; 
 
 	void Unbind() const;
 

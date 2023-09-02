@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/W4 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/W3 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,7 +130,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/W4 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/W3 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -121,9 +121,9 @@ void main() {
     //DIRECTIONAL LIGHT(SUN)
     Output += CalcDirLight();
     //SPOT LIGHT (TORCH)
-   // Output += CalcSpotLight();
+    Output += CalcSpotLight();
     //POINT LIGHT (LIGHT)
-   // Output += CalcPointLight();
+    //Output += CalcPointLight();
     
 
 

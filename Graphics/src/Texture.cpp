@@ -1,3 +1,4 @@
+
 #include "Texture.h"
 #include"stb/stb_image.h"
 #include "DebugUtils.h"
@@ -6,7 +7,11 @@
 
 // @param[in] PATH path of the texture.
 //@param[in] TexType texture type written in form of texture_type where type can be (diffuse or specular).
-Texture::Texture(const char* PATH,std::string TexType):
+Texture::Texture(const char* PATH, const std::string& TexType) :
+	m_ID(0),
+	m_Width(0),
+	m_Height(0),
+	m_nrChannels(0),
 	m_TexType(TexType)
 {
 	GLCall(glGenTextures(1, &m_ID));
@@ -31,12 +36,14 @@ Texture::Texture(const char* PATH,std::string TexType):
 	stbi_image_free(image);
 }
 
+
+
 Texture::~Texture()
 {
 	glDeleteTextures(1, &m_ID);
 }
 
-void Texture::Bind(uint32_t unit) const {
+void Texture::Bind(const uint32_t& unit) const {
 	glActiveTexture(GL_TEXTURE0+unit);
 	glBindTexture(GL_TEXTURE_2D, m_ID);
 }
