@@ -7,6 +7,7 @@ class Texture {
 
 public:
 	Texture(const char* PATH,std::string TexName);
+
 	~Texture();
 
 

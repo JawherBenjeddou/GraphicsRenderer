@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices, std::vector<Texture>& textures)
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices, std::vector<Texture*>& textures)
 	:m_Vertices(vertices),
 	 m_Indices(indices),
 	 m_Textures(textures)
@@ -17,9 +17,9 @@ void Mesh::Draw(Shader& shader)
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
 		// retrieve texture number (the N in texture_diffuseN)
-		m_Textures[i].Bind(i);
+		m_Textures[i]->Bind(i);
 		std::string number;
-		std::string name = m_Textures[i].getType();
+		std::string name = m_Textures[i]->getType();
 		if (name == "texture_diffuse")
 		{
 			number = std::to_string(diffuseNr++);

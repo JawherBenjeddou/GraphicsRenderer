@@ -85,17 +85,15 @@ namespace Graphics {
 			{{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
 			{{-0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
 		};
-		std::vector<Texture> T;
+		std::vector<Texture*> T;
 
 
 
 
 		Texture diffuse("../assets/textures/container2.png","texture_diffuse");
 		Texture specular("../assets/textures/container2_specular.png","texture_specular");
-		//diffuse.Bind(0);
-		//specular.Bind(1);
-		T.push_back(diffuse);
-		T.push_back(specular);
+		T.push_back(&diffuse);
+		T.push_back(&specular);
 		
 		Mesh mesh(cubeVertices, cubeIndices, T);
 
@@ -153,20 +151,20 @@ namespace Graphics {
 			//shader.setUniform3Float("u_light.ambientStrength", 1.0f, 1.0f, 1.0f);
 			//shader.setUniform3Float("u_light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
 			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
-			//shader.setUniformInt("u_material.texture_diffuse1", 0);
-			//shader.setUniformInt("u_material.texture_specular1", 1);
+	/*		shader.setUniformInt("u_material.texture_diffuse1", 0);
+			shader.setUniformInt("u_material.texture_specular1", 1);*/
 			shader.setUniformFloat("u_material.shininess", 32);
 			shader.setUniform3Float("u_viewdirection", VEC4_EXP(camera.getViewDirection()));
 			shader.setUniform3Float("u_viewposition", VEC4_EXP(camera.getCameraPosition()));
 
-			shader.setUniform3Float("u_light.ambientStrength", 0.5f, 0.5f, 0.5f);
+			shader.setUniform3Float("u_light.ambientStrength", 0.1f, 0.1f, 0.1f);
 			shader.setUniform3Float("u_light.diffuseStrength", 0.8f, 0.6f, 0.7f); // darkened
 			shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
 
 			mesh.Draw(shader);
+			
 
-			//glDrawElements(GL_TRIANGLES, cubeIndices.size(), GL_UNSIGNED_INT, 0);
-			//mesh.Draw(shader);
+
 			//OBJECT TEMPORARY MOVEMENT
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
 				LightPos.y += 0.1f;
