@@ -121,13 +121,13 @@ void main() {
     //DIRECTIONAL LIGHT(SUN)
     Output += CalcDirLight();
     //SPOT LIGHT (TORCH)
-    Output += CalcSpotLight();
+   // Output += CalcSpotLight();
     //POINT LIGHT (LIGHT)
-    //Output += CalcPointLight();
+   // Output += CalcPointLight();
     
 
 
 
-    FragColor = vec4(vec3(texture(u_material.texture_diffuse1, TextPos)), 1.0);
+    FragColor = vec4(Output, 1.0);
 
 }

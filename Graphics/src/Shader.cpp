@@ -62,6 +62,7 @@ void Shader::use()
 	GLCall(glUseProgram(m_ID));
 }
 
+
 std::string Shader::readShadersCode(const char* filePath) {
 	std::string code;
 	std::ifstream shaderFile;
