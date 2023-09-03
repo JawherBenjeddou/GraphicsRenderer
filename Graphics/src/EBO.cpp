@@ -5,7 +5,7 @@ EBO::EBO() : m_ID(NULL)
 {
 	
 	GLCall(glGenBuffers(1, &m_ID));
-	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID););
+	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID));
 }
 
 EBO::~EBO()

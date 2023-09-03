@@ -150,8 +150,6 @@ namespace Graphics {
 			//shader.setUniform3Float("u_light.ambientStrength", 1.0f, 1.0f, 1.0f);
 			//shader.setUniform3Float("u_light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
 			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
-	/*		shader.setUniformInt("u_material.texture_diffuse1", 0);
-			shader.setUniformInt("u_material.texture_specular1", 1);*/
 			shader.setUniformFloat("u_material.shininess", 32);
 			shader.setUniform3Float("u_viewdirection", VEC4_EXP(camera.getViewDirection()));
 			shader.setUniform3Float("u_viewposition", VEC4_EXP(camera.getCameraPosition()));
