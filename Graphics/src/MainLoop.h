@@ -48,7 +48,7 @@ namespace Graphics {
 			20, 21, 22, 22, 23, 20 // Bottom face
 		};
 
-		std::vector<Vertex> cubeVertices = {
+		std::vector<VertexInfo> cubeVertices = {
 			// Front face
 			{{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
 			{{0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},

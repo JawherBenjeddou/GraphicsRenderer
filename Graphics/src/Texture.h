@@ -3,11 +3,16 @@
 
 #include "GL/glew.h"
 
+
+
 class Texture {
 
 public:
-	Texture(const char* PATH,const std::string& TexName);
+	
+	Texture(const char* PATH,const std::string& TypeName);
 
+	Texture(const char* PATH, const std::string& directory, bool gamma = false);
+	
 	Texture(const Texture& other) = delete; // explicitly delete the copy constructor
 
 	Texture(Texture&& other) noexcept
@@ -39,9 +44,11 @@ public:
 	std::string getType() const;
 
 private:
+	std::string m_TexType;
 	uint32_t m_ID;
+
 	int32_t m_Width;
 	int32_t m_Height; 
 	int32_t m_nrChannels;
-	std::string m_TexType;
+	int32_t m_nrComponents;
 };
