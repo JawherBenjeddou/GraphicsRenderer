@@ -32,16 +32,16 @@ Texture::Texture(const char* PATH, std::string_view TypeName)
 }
 
 //Constructor For using complex models Texture
-Texture::Texture(const char* PATH, const std::string& directory, std::string_view TypeName, bool gamma)
-	:m_Path(PATH),
+/*Texture::Texture(const std::string& filepath, std::string_view TypeName, bool gamma)
+	:m_Path(filepath),
 	 m_TexType(TypeName)
 
 {
-	std::string filename = directory + '/' + std::string(PATH);
+	
 
 	GLCall(glGenTextures(1, &m_ID));
 
-	unsigned char* data = stbi_load(filename.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
+	unsigned char* data = stbi_load(filepath.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
 	if (data)
 	{
 		GLenum format;
@@ -67,12 +67,12 @@ Texture::Texture(const char* PATH, const std::string& directory, std::string_vie
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << PATH << std::endl;
+		std::cout << "Texture failed to load at path: " << filepath << std::endl;
 		stbi_image_free(data);
 	}
 ;
 }
-
+*/
 
 Texture::~Texture()
 {

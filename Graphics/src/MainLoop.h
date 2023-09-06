@@ -9,7 +9,6 @@
 
 
 #include "ImGuiLayer.h"
-
 #include "Shader.h"
 #include "Texture.h"
 #include "Renderer.h"
@@ -17,7 +16,7 @@
 #include "GameTimer.h"
 #include "Screen.h"
 #include "Mesh.h"
-
+#include "Model.h"
 
 namespace Graphics {
 
@@ -37,65 +36,9 @@ namespace Graphics {
 		GameTimer Timer;
 
 
-		std::vector<uint32_t> cubeIndices = {
-			0, 1, 2, 2, 3, 0, // Front face
-			4, 5, 6, 6, 7, 4, // Back face
-			8, 9, 10, 10, 11, 8, // Left face
-			12, 13, 14, 14, 15, 12, // Right face
-			16, 17, 18, 18, 19, 16, // Top face
-			20, 21, 22, 22, 23, 20 // Bottom face
-		};
-
-		std::vector<VertexInfo> cubeVertices = {
-			// Front face
-			{{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
-			{{0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
-			{{0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
-			{{-0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
-
-			// Back face
-			{{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}},
-			{{0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}},
-			{{0.5f, 0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}},
-			{{-0.5f, 0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}},
-
-			// Left face
-			{{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
-			{{-0.5f, -0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
-			{{-0.5f, 0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
-			{{-0.5f, 0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
-
-			// Right face
-			{{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
-			{{0.5f, -0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
-			{{0.5f, 0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
-			{{0.5f, 0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
-
-			// Top face
-			{{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
-			{{0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
-			{{0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}},
-			{{-0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}},
-
-			// Bottom face
-			{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}},
-			{{0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}},
-			{{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
-			{{-0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
-		};
-		std::vector<Texture> T;
-
-
-
-
-		Texture diffuse("../assets/textures/container2.png","texture_diffuse");
-		Texture specular("../assets/textures/container2_specular.png","texture_specular");
-		T.push_back(std::move(diffuse));
-		T.push_back(std::move(specular));
-		Mesh mesh(cubeVertices, cubeIndices, T);
-
-
 		GuiSetup::OnAttach(screen.getWindow());
+
+		//Model ourModel("../assets/models/backpack/backpack.obj");
 
 		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -116,10 +59,7 @@ namespace Graphics {
 
 			screen.Clear(clear_color);
 			GuiSetup::Begin();
-			glm::vec3 lightColor;
-			lightColor.x = 1.0f;
-			lightColor.y = 1.0f;
-			lightColor.z = 1.0f;
+			glm::vec3 lightColor(1.0f,1.0f,1.0f);
 			glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 			glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
 
@@ -151,15 +91,15 @@ namespace Graphics {
 			shader.setUniformFloat("u_material.shininess", 32);
 			shader.setUniform3Float("u_viewdirection", camera.getViewDirection());
 			shader.setUniform3Float("u_viewposition", camera.getCameraPosition());
+			glm::vec3 ambientlight(0.1f, 0.1f, 0.1f);
+			glm::vec3 diffuselight(0.8f, 0.6f, 0.7f);
+			glm::vec3 specularlight(1.0f, 1.0f, 1.0f);
+			shader.setUniform3Float("u_light.ambientStrength",ambientlight);
+			shader.setUniform3Float("u_light.diffuseStrength",diffuselight); // darkened
+			shader.setUniform3Float("u_light.specularStrength",specularlight);
 
-			//shader.setUniform3Float("u_light.ambientStrength", 0.1f, 0.1f, 0.1f);
-			//shader.setUniform3Float("u_light.diffuseStrength", 0.8f, 0.6f, 0.7f); // darkened
-			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
 
-			mesh.Draw(shader);
-			
-
-
+			//ourModel.Draw(shader);
 			//OBJECT TEMPORARY MOVEMENT
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
 				LightPos.y += 0.1f;
