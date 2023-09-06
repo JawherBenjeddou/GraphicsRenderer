@@ -83,28 +83,28 @@ std::string Shader::readShadersCode(const char* filePath) {
 }
 
 // utility uniform functions
-void Shader::setUniformBool(const std::string& name, bool value) const
+void Shader::setUniformBool(std::string_view  name, bool value) const
 {
-	GLCall(glUniform1i(glGetUniformLocation(m_ID, name.c_str()), static_cast<int>(value)));
+	GLCall(glUniform1i(glGetUniformLocation(m_ID, name.data()), static_cast<int>(value)));
 }
 
-void Shader::setUniformInt(const std::string& name, int value) const
+void Shader::setUniformInt(std::string_view  name, int value) const
 {
-	GLCall(glUniform1i(glGetUniformLocation(m_ID, name.c_str()),value));
+	GLCall(glUniform1i(glGetUniformLocation(m_ID, name.data()),value));
 }
 
-void Shader::setUniformFloat(const std::string& name, float value) const
+void Shader::setUniformFloat(std::string_view  name, float value) const
 {
-	GLCall(glUniform1f(glGetUniformLocation(m_ID, name.c_str()),value));
+	GLCall(glUniform1f(glGetUniformLocation(m_ID, name.data()),value));
 }
 
-void Shader::setUniform3Float(const std::string& name, float R,float G,float B) const
+void Shader::setUniform3Float(std::string_view  name, glm::vec3 RGB) const
 {
-	GLCall(glUniform3f(glGetUniformLocation(m_ID, name.c_str()),R,G,B));
+	GLCall(glUniform3f(glGetUniformLocation(m_ID, name.data()),RGB.x,RGB.y,RGB.z));
 }
 
-void Shader::setUniformMat4f(const std::string& name,glm::mat4 Matrix)
+void Shader::setUniformMat4f(std::string_view name,glm::mat4 Matrix)
 {
-	uint32_t Location = glGetUniformLocation(m_ID, name.c_str()); //Get uniform location
+	uint32_t Location = glGetUniformLocation(m_ID, name.data()); //Get uniform location
 	GLCall(glUniformMatrix4fv(Location, 1, GL_FALSE, glm::value_ptr(Matrix))); //pass uniform location to glUniformMatrix() and pass matrix using glm::value_ptr()
 }

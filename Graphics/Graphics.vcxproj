@@ -94,6 +94,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\include;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/W3 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,6 +113,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\include;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +133,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\include;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/W3 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +152,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\include;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include\GLFW;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

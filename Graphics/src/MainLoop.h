@@ -18,8 +18,6 @@
 #include "Screen.h"
 #include "Mesh.h"
 
-#define VEC4F_FMT "[%.9g, %.9g, %.9g, %.9g]"
-#define VEC4_EXP(v) v.x, v.y, v.z
 
 namespace Graphics {
 
@@ -138,12 +136,12 @@ namespace Graphics {
 			
 			//TEXTURE BINDING (LIGHTING STUFF)
 			//-------------------------------
-			shader.setUniform3Float("u_camerapos", camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+			shader.setUniform3Float("u_camerapos", camera.getCameraPosition());
 			glm::vec3 directionalLight(-1.0f, -1.0f, -1.0f);
-			shader.setUniform3Float("u_light.direction", directionalLight.x, directionalLight.y, directionalLight.z);
+			shader.setUniform3Float("u_light.direction", directionalLight);
 			//POINT LIGHT CONFIG
 			//------------------
-			shader.setUniform3Float("u_PointLight.position", LightPos.x, LightPos.y, LightPos.z);
+			shader.setUniform3Float("u_PointLight.position", LightPos);
 			shader.setUniformFloat("u_PointLight.constant", 1.0f);
 			shader.setUniformFloat("u_PointLight.linear", 0.07f);
 			shader.setUniformFloat("u_PointLight.quadratic", 0.017f);
@@ -151,12 +149,12 @@ namespace Graphics {
 			//shader.setUniform3Float("u_light.diffuseStrength", 1.0f, 1.0f, 1.0f); // very light
 			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
 			shader.setUniformFloat("u_material.shininess", 32);
-			shader.setUniform3Float("u_viewdirection", VEC4_EXP(camera.getViewDirection()));
-			shader.setUniform3Float("u_viewposition", VEC4_EXP(camera.getCameraPosition()));
+			shader.setUniform3Float("u_viewdirection", camera.getViewDirection());
+			shader.setUniform3Float("u_viewposition", camera.getCameraPosition());
 
-			shader.setUniform3Float("u_light.ambientStrength", 0.1f, 0.1f, 0.1f);
-			shader.setUniform3Float("u_light.diffuseStrength", 0.8f, 0.6f, 0.7f); // darkened
-			shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
+			//shader.setUniform3Float("u_light.ambientStrength", 0.1f, 0.1f, 0.1f);
+			//shader.setUniform3Float("u_light.diffuseStrength", 0.8f, 0.6f, 0.7f); // darkened
+			//shader.setUniform3Float("u_light.specularStrength", 1.0f, 1.0f, 1.0f);
 
 			mesh.Draw(shader);
 			

@@ -22,15 +22,15 @@ public:
 	void use();
 
 	// utility uniform functions
-	void setUniformBool(const std::string& name, bool value) const;
+	void setUniformBool(std::string_view name, bool value) const;
 	
-	void setUniformInt(const std::string& name, int value) const;
+	void setUniformInt(std::string_view name, int value) const;
 	
-	void setUniformFloat(const std::string& name, float value) const;
+	void setUniformFloat(std::string_view name, float value) const;
 	
-	void setUniform3Float(const std::string& name, float R, float G, float B) const;
+	void setUniform3Float(std::string_view name, glm::vec3 RGB) const;
 
-	void setUniformMat4f(const std::string& name, glm::mat4 Matrix);
+	void setUniformMat4f(std::string_view name, glm::mat4 Matrix);
 
 	uint32_t getId() { return m_ID; }
 

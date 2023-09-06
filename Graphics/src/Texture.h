@@ -9,9 +9,9 @@ class Texture {
 
 public:
 	
-	Texture(const char* PATH,const std::string& TypeName);
+	Texture(const char* PATH,std::string_view TypeName);
 
-	Texture(const char* PATH, const std::string& directory, bool gamma = false);
+	Texture(const char* PATH, const std::string& directory, std::string_view TypeName, bool gamma = 0);
 	
 	Texture(const Texture& other) = delete; // explicitly delete the copy constructor
 
@@ -35,7 +35,7 @@ public:
 	//const uint32_t& : this is used so the function accepts l and r values (r value = "0" l value = "i")
 	//bcs using only int& make us unable to use r values
 
-	void Bind(const uint32_t& unit = 0) const; 
+	void Bind(uint32_t unit = 0) const; 
 
 	void Unbind() const;
 
@@ -43,9 +43,11 @@ public:
 
 	std::string getType() const;
 
+	std::string getPath() const;
 private:
-	std::string m_TexType;
 	uint32_t m_ID;
+	std::string m_TexType;
+	std::string m_Path;
 
 	int32_t m_Width;
 	int32_t m_Height; 

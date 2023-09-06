@@ -93,6 +93,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,6 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +130,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +149,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -8,8 +8,11 @@ namespace GuiSetup
 {
 
 	void OnAttach(GLFWwindow* window) ;
+
 	void OnDetach(); 
+
 	void Begin();
+
 	void RenderImGuiElements();
 	
 	void SetDarkThemeColors();

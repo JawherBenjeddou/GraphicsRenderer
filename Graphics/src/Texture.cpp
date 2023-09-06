@@ -6,7 +6,7 @@
 //Constructor for using custom simple Texture
 // @param[in] PATH path of the texture.
 //@param[in] TexType texture type written in form of texture_type where type can be (diffuse or specular).
-Texture::Texture(const char* PATH, const std::string& TypeName)
+Texture::Texture(const char* PATH, std::string_view TypeName)
 	:m_TexType(TypeName)
 {
 	GLCall(glGenTextures(1, &m_ID));
@@ -32,12 +32,13 @@ Texture::Texture(const char* PATH, const std::string& TypeName)
 }
 
 //Constructor For using complex models Texture
-Texture::Texture(const char* PATH, const std::string& directory, bool gamma)
-{
-	std::string filename = std::string(PATH);
-	filename = directory + '/' + filename;
+Texture::Texture(const char* PATH, const std::string& directory, std::string_view TypeName, bool gamma)
+	:m_Path(PATH),
+	 m_TexType(TypeName)
 
-	
+{
+	std::string filename = directory + '/' + std::string(PATH);
+
 	GLCall(glGenTextures(1, &m_ID));
 
 	unsigned char* data = stbi_load(filename.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
@@ -50,12 +51,14 @@ Texture::Texture(const char* PATH, const std::string& directory, bool gamma)
 			format = GL_RGB;
 		else if (m_nrComponents == 4)
 			format = GL_RGBA;
+		else
+			format = GL_RED;
 
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, format, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, data));
 		GLCall(glGenerateMipmap(GL_TEXTURE_2D));
 
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)));
+		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
@@ -76,7 +79,7 @@ Texture::~Texture()
 	glDeleteTextures(1, &m_ID);
 }
 
-void Texture::Bind(const uint32_t& unit) const {
+void Texture::Bind(uint32_t unit) const {
 	glActiveTexture(GL_TEXTURE0+unit);
 	glBindTexture(GL_TEXTURE_2D, m_ID);
 }
@@ -84,6 +87,11 @@ void Texture::Bind(const uint32_t& unit) const {
 void Texture::Unbind() const
 {
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
+std::string Texture::getPath() const
+{
+	return m_Path;
 }
 
 uint32_t Texture::getID() const

@@ -10,7 +10,7 @@ void Model::Draw(Shader& shader)
 }
 
 //Loads model path and pushes the meshes to the vector
-void Model::LoadModel(std::string path)
+void Model::LoadModel(const std::string& path)
 {
 	Assimp::Importer import;
 	const auto* scene = import.ReadFile(path,ASSIMP_LOAD_FLAGS);
@@ -43,18 +43,26 @@ void Model::ProcessNode(aiNode* RootNode, const aiScene* scene)
 
 
 //TODO :  split ProcessMesh() function into multiple smaller functions for easier readability
+//TODO : FIGURE OUT HOW TO ADD THE TEXTURES TO THE CLASS
 Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
+	auto* material = scene->mMaterials[mesh->mMaterialIndex];
 	std::vector<VertexInfo> Vertices;
 	std::vector<uint32_t> Indices;
 	std::vector<Texture> TextureContainer;
+	ExtractVertices(mesh, Vertices);
+	ExtractIndices(mesh, Indices);
+	//Extracting Textures with different types and populating the Textures Container
+	// 1. diffuse maps
+	ExtractTextures(material, mesh, aiTextureType_DIFFUSE, "texture_diffuse",TextureContainer);
+	// 2. specular maps
+	ExtractTextures(material, mesh, aiTextureType_SPECULAR, "texture_specular", TextureContainer);
+	// 3. normal maps
+	ExtractTextures(material, mesh, aiTextureType_HEIGHT, "texture_normal", TextureContainer);
+	// 4. height maps
+	ExtractTextures(material, mesh, aiTextureType_AMBIENT, "texture_height", TextureContainer);
 	
-
-
-	//TODO : FIGURE OUT HOW TO ADD THE TEXTURES TO THE CLASS
-	//Setting up the textures 
-	
-
+	return Mesh(Vertices, Indices, TextureContainer);
 }
 
 // Extract vertex data from the mesh and populate the vertices vector.
@@ -93,13 +101,19 @@ void Model::ExtractIndices(aiMesh* mesh, std::vector<uint32_t>& indices)
 		aiFace face = mesh->mFaces[i];
 
 		for (size_t j = 0; j < face.mNumIndices; j++)
-			Indices.push_back(face.mIndices[j]);
+			indices.push_back(face.mIndices[j]);
 
 	}
 }
 
 // Extract texture data from the mesh and populate the textures vector.
-void Model::ExtractTextures(aiMesh* mesh, std::vector<Texture>& textures)
+void Model::ExtractTextures(aiMaterial* mat,aiMesh* mesh, aiTextureType type,std::string Typename, std::vector<Texture>& textures)
 {
 	
+	for (size_t count = 0; count < mat->GetTextureCount(type); count++)
+	{
+		aiString str;
+		mat->GetTexture(type, count, &str);
+		textures.push_back(Texture(str.C_Str(), this->m_Directory, Typename));
+	}
 }
