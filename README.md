@@ -25,9 +25,8 @@ just git clone --recursive and you good to go ! (for now)
 - imGui (GUI)
 
 ## 3. Requirements
-Overload requires:
 - RAM: 100MB
-- OS: Windows 10/11
+- OS: Windows 10/11 (maybe other windows work idk)
 - GPU: Graphics card supporting OpenGL 4.3/4.6
 - CPU: x64
   
