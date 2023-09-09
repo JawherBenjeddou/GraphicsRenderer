@@ -45,12 +45,10 @@ std::shared_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
     std::vector<VertexInfo> vertices;
     std::vector<uint32_t> indices;
     std::vector<Texture> textures;
-
     ExtractVertices(mesh, vertices);
     ExtractIndices(mesh, indices);
 
- 
-
+    
     // Create the Mesh object using std::make_shared
     return std::make_shared<Mesh>(vertices, indices, textures);
 }

@@ -26,7 +26,7 @@ namespace Graphics {
 		// -----------------------------------------------------------------------------
 		//                             GLFW Initialization
 		// -----------------------------------------------------------------------------
-		Screen screen("Graphics", 800, 600);
+		Screen screen("Graphics", 1200, 900);
 
 		// -----------------------------------------------------------------------------
 		//                             Classes Initialization
@@ -38,7 +38,7 @@ namespace Graphics {
 
 		GuiSetup::OnAttach(screen.getWindow());
 
-		Model ourModel("../assets/models/backpack/backpack.obj");
+		Model ourModel("../assets/models/cyborg/cyborg.obj");
 
 		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 

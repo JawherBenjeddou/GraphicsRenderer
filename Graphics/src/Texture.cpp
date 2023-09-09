@@ -3,56 +3,28 @@
 #include"stb/stb_image.h"
 #include "DebugUtils.h"
 
-//Constructor for using custom simple Texture
-// @param[in] PATH path of the texture.
-//@param[in] TexType texture type written in form of texture_type where type can be (diffuse or specular).
-Texture::Texture(const char* PATH, std::string_view TypeName)
-	:m_TexType(TypeName)
+
+Texture::Texture(const char* filepath, std::string& directory, std::string_view TypeName, bool gamma)
+	:m_Path(filepath),
+	 m_TexType(TypeName),
+	 m_nrChannels(0)
+
 {
+	std::string filename = std::string(filepath);
+	filename = directory + '/' + filename;
 	GLCall(glGenTextures(1, &m_ID));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
-	// set the texture wrapping/filtering options (on currently bound texture)
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-	// load and generate the texture
-	unsigned char* image = stbi_load(PATH, &m_Width, &m_Height, &m_nrChannels, 0);
-	if (image)
-	{
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image));
-		GLCall(glGenerateMipmap(GL_TEXTURE_2D));
-	}
-	else
-	{
-		std::cout << "Texture failed to load at path: " << PATH << std::endl;
-	}
-	//stbi_set_flip_vertically_on_load(true); //FLIP IMAGE AFTER LOADED
-	stbi_image_free(image);
-}
 
-//Constructor For using complex models Texture
-/*Texture::Texture(const std::string& filepath, std::string_view TypeName, bool gamma)
-	:m_Path(filepath),
-	 m_TexType(TypeName)
-
-{
-	
-
-	GLCall(glGenTextures(1, &m_ID));
-
-	unsigned char* data = stbi_load(filepath.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
+	unsigned char* data = stbi_load(filename.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
 	if (data)
 	{
-		GLenum format;
+		GLenum format = NULL;
 		if (m_nrComponents == 1)
 			format = GL_RED;
 		else if (m_nrComponents == 3)
 			format = GL_RGB;
 		else if (m_nrComponents == 4)
 			format = GL_RGBA;
-		else
-			format = GL_RED;
 
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, format, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, data));
@@ -67,21 +39,22 @@ Texture::Texture(const char* PATH, std::string_view TypeName)
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << filepath << std::endl;
+		std::cout << "Texture failed to load at path: " << filename << std::endl;
 		stbi_image_free(data);
 	}
-;
+
 }
-*/
+
 
 Texture::~Texture()
 {
 	glDeleteTextures(1, &m_ID);
 }
 
-void Texture::Bind(uint32_t unit) const {
-	glActiveTexture(GL_TEXTURE0+unit);
-	glBindTexture(GL_TEXTURE_2D, m_ID);
+void Texture::Bind(uint32_t unit) const 
+{
+	GLCall(glActiveTexture(GL_TEXTURE0+unit));
+	GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
 }
 
 void Texture::Unbind() const

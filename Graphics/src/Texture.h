@@ -6,12 +6,9 @@
 
 
 class Texture {
-
 public:
-	
-	Texture(const char* PATH,std::string_view TypeName);
 
-	//Texture(const std::string& filepath, std::string_view TypeName, bool gamma);
+	Texture(const char* filepath, std::string& directory, std::string_view TypeName, bool gamma = 0);
 	
 	Texture(const Texture& other) = delete; // explicitly delete the copy constructor
 

@@ -10,8 +10,21 @@ Mesh::Mesh(std::vector<VertexInfo> vertices, std::vector<uint32_t> indices, std:
 
 void Mesh::Draw(Shader& shader)
 {
-
-	glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
+	//uint32_t diffuseNr = 1;
+	//uint32_t specularNr = 1;
+	//for (size_t i = 0; i < m_Textures.size(); i++)
+	//{
+	//	m_Textures[i]->Bind(i);
+	//	// retrieve texture number (the N in diffuse_textureN)
+	//	std::string number;
+	//	std::string name = m_Textures[i]->getType();
+	//	if (name == "texture_diffuse")
+	//		number = std::to_string(diffuseNr++);
+	//	else if (name == "texture_specular")
+	//		number = std::to_string(specularNr++);
+	//	shader.setUniformValue<int>(("material." + name + number).c_str(), i);
+	//}
+	GLCall(glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0));
 
 }
 
