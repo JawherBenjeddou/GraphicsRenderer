@@ -16,26 +16,42 @@ class Shader
 {
 public:
 	//Constructor
-	Shader(const char* FragPath, const char* VertPath);
+	Shader(std::string_view FragPath,std::string_view VertPath);
 
 	//USE / ACTIVATE SHADER
 	void use();
 
-	// utility uniform functions
-	void setUniformBool(std::string_view name, bool value) const;
-	
-	void setUniformInt(std::string_view name, int value) const;
-	
-	void setUniformFloat(std::string_view name, float value) const;
-	
-	void setUniform3Float(std::string_view name, glm::vec3 RGB) const;
+	template <typename Type>
+	void setUniformValue(std::string_view name, Type value) const {
+		static_assert(std::is_same_v<Type, int> || std::is_same_v<Type, float> || std::is_same_v<Type, glm::vec3> || std::is_same_v<Type, glm::mat4>, "Unsupported type for setUniformValue");
+	}
 
-	void setUniformMat4f(std::string_view name, glm::mat4 Matrix);
+	template <>
+	void setUniformValue<int>(std::string_view name, int value) const {
+		GLCall(glUniform1i(glGetUniformLocation(m_ID, name.data()), value));
+	}
 
-	uint32_t getId() { return m_ID; }
+	template <>
+	void setUniformValue<float>(std::string_view name, float value) const {
+		GLCall(glUniform1f(glGetUniformLocation(m_ID, name.data()), value));
+	}
+	template <>
+	void setUniformValue<glm::vec3>(std::string_view name, glm::vec3 RGB) const {
+		GLCall(glUniform3f(glGetUniformLocation(m_ID, name.data()), RGB.x, RGB.y, RGB.z));
+	}
+	template<>
+	void setUniformValue<glm::mat4>(std::string_view name, glm::mat4 Matrix) const {
+		uint32_t Location = glGetUniformLocation(m_ID, name.data()); //Get uniform location
+		GLCall(glUniformMatrix4fv(Location, 1, GL_FALSE, glm::value_ptr(Matrix))); //pass uniform location to glUniformMatrix() and pass matrix using glm::value_ptr()}
+	}
+
+	uint32_t getId() const { 
+		return m_ID; 
+	}
 
 private:
-	std::string readShadersCode(const char* filePath);
+
+	std::string readShadersCode(std::string_view filePath);
 
 private:
 	//PROGRAM ID

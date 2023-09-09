@@ -11,7 +11,7 @@
 class Screen {
 
 public:
-    Screen(const char* title, int width, int height);
+    Screen(std::string_view title, int width, int height);
 
     ~Screen();
 

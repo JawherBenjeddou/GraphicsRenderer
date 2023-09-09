@@ -1,7 +1,7 @@
 #include "Shader.h"
 
 
-Shader::Shader(const char* FragPath,const char* VertPath)
+Shader::Shader(std::string_view FragPath, std::string_view VertPath)
 {
 	//Handling Files
 	std::string vShaderCode = readShadersCode(VertPath);
@@ -63,14 +63,14 @@ void Shader::use()
 }
 
 
-std::string Shader::readShadersCode(const char* filePath) {
+std::string Shader::readShadersCode(std::string_view filePath) {
 	std::string code;
 	std::ifstream shaderFile;
 	// ensure ifstream objects can throw exceptions:
 	shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try {
 		shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-		shaderFile.open(filePath);
+		shaderFile.open(filePath.data());
 		std::stringstream shaderStream;
 		shaderStream << shaderFile.rdbuf();
 		shaderFile.close();
@@ -80,31 +80,4 @@ std::string Shader::readShadersCode(const char* filePath) {
 		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << std::endl;
 	}
 	return code;
-}
-
-// utility uniform functions
-void Shader::setUniformBool(std::string_view  name, bool value) const
-{
-	GLCall(glUniform1i(glGetUniformLocation(m_ID, name.data()), static_cast<int>(value)));
-}
-
-void Shader::setUniformInt(std::string_view  name, int value) const
-{
-	GLCall(glUniform1i(glGetUniformLocation(m_ID, name.data()),value));
-}
-
-void Shader::setUniformFloat(std::string_view  name, float value) const
-{
-	GLCall(glUniform1f(glGetUniformLocation(m_ID, name.data()),value));
-}
-
-void Shader::setUniform3Float(std::string_view  name, glm::vec3 RGB) const
-{
-	GLCall(glUniform3f(glGetUniformLocation(m_ID, name.data()),RGB.x,RGB.y,RGB.z));
-}
-
-void Shader::setUniformMat4f(std::string_view name,glm::mat4 Matrix)
-{
-	uint32_t Location = glGetUniformLocation(m_ID, name.data()); //Get uniform location
-	GLCall(glUniformMatrix4fv(Location, 1, GL_FALSE, glm::value_ptr(Matrix))); //pass uniform location to glUniformMatrix() and pass matrix using glm::value_ptr()
 }

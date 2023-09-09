@@ -1,14 +1,14 @@
 #include "screen.h"
 
-Screen::Screen(const char* title, int width, int height):
-    title(title),
+Screen::Screen(std::string_view title, int width, int height):
+    title(title.data()),
     width(width),
     height(height)
 {
     if (!glfwInit())
         return;
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(width, height, title, NULL, NULL);
+    window = glfwCreateWindow(width, height, title.data(), NULL, NULL);
     if (!window)
     {
         std::cerr << " Window creation ERROR";

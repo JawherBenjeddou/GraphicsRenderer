@@ -3,15 +3,15 @@
 
 // Calls every Draw function in the Mesh class in each of the instances in the vector
 void Model::Draw(Shader& shader) {
-    for (const auto& mesh : m_Meshes) {
+    for (auto& mesh : m_Meshes) {
         mesh->Draw(shader);
     }
 }
 
 // Loads model path and pushes the meshes to the vector
-void Model::LoadModel(const std::string& path) {
+void Model::LoadModel(std::string_view path) {
     Assimp::Importer import;
-    const auto * scene = import.ReadFile(path, ASSIMP_LOAD_FLAGS);
+    const auto * scene = import.ReadFile(path.data(), ASSIMP_LOAD_FLAGS);
     
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cerr << "ERROR::ASSIMP::" << import.GetErrorString() << "\n";
@@ -30,9 +30,7 @@ void Model::ProcessNode(aiNode* rootNode, const aiScene* scene) {
         auto* mesh = scene->mMeshes[rootNode->mMeshes[i]];
         std::shared_ptr<Mesh> meshData = ProcessMesh(mesh, scene);
         
-        if (meshData) {
-            m_Meshes.push_back(meshData);
-        }
+        m_Meshes.push_back(meshData);
     }
 
     // Then the same for each of its children
@@ -51,9 +49,7 @@ std::shared_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
     ExtractVertices(mesh, vertices);
     ExtractIndices(mesh, indices);
 
-    // Extracting Textures with different types and populating the Textures Container
-    ExtractTextures(material, mesh, aiTextureType_DIFFUSE, "texture_diffuse", textures);
-    ExtractTextures(material, mesh, aiTextureType_SPECULAR, "texture_specular", textures);
+ 
 
     // Create the Mesh object using std::make_shared
     return std::make_shared<Mesh>(vertices, indices, textures);
@@ -97,18 +93,5 @@ void Model::ExtractIndices(aiMesh* mesh, std::vector<uint32_t>& indices)
 		for (size_t j = 0; j < face.mNumIndices; j++)
 			indices.push_back(face.mIndices[j]);
 
-	}
-}
-
-// Extract texture data from the mesh and populate the textures vector.
-void Model::ExtractTextures(aiMaterial* mat,aiMesh* mesh, aiTextureType type,std::string Typename, std::vector<Texture>& textures)
-{
-	
-	for (size_t count = 0; count < mat->GetTextureCount(type); count++)
-	{
-		aiString str;
-		mat->GetTexture(type, count, &str);
-        std::string filename = m_Directory + '/' + std::string(str.C_Str());
-		textures.push_back(std::move(Texture(filename.c_str(), Typename)));
 	}
 }

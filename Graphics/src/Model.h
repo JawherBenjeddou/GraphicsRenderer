@@ -25,7 +25,7 @@ public:
 	void Draw(Shader& shader);
 
 private:
-	void LoadModel(const std::string& path);
+	void LoadModel(std::string_view path);
 
 	void ProcessNode(aiNode* node, const aiScene* scene);
 
@@ -35,7 +35,6 @@ private:
 
 	void ExtractIndices(aiMesh* mesh, std::vector<uint32_t>& indices);
 
-	void ExtractTextures(aiMaterial* mat, aiMesh* mesh, aiTextureType type, std::string Typename, std::vector<Texture>& textures);
 
 private:
 	// model data
