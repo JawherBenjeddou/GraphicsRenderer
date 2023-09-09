@@ -27,10 +27,9 @@ void Model::LoadModel(std::string_view path) {
 void Model::ProcessNode(aiNode* rootNode, const aiScene* scene) {
     // Process all the node’s meshes (if any)
     for (size_t i = 0; i < rootNode->mNumMeshes; i++) {
+
         auto* mesh = scene->mMeshes[rootNode->mMeshes[i]];
-        std::shared_ptr<Mesh> meshData = ProcessMesh(mesh, scene);
-        
-        m_Meshes.push_back(meshData);
+        m_Meshes.push_back(ProcessMesh(mesh,scene));
     }
 
     // Then the same for each of its children
@@ -41,13 +40,15 @@ void Model::ProcessNode(aiNode* rootNode, const aiScene* scene) {
 
 // Split ProcessMesh() function into multiple smaller functions for easier readability
 std::shared_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
+    
     auto* material = scene->mMaterials[mesh->mMaterialIndex];
     std::vector<VertexInfo> vertices;
     std::vector<uint32_t> indices;
-    std::vector<Texture> textures;
+    std::vector<Texture*> textures;
     ExtractVertices(mesh, vertices);
     ExtractIndices(mesh, indices);
-
+    ExtractTextures(material, aiTextureType_DIFFUSE, textures, "texture_diffuse");
+    //ExtractTextures(material, aiTextureType_SPECULAR, textures, "texture_diffuse");
     
     // Create the Mesh object using std::make_shared
     return std::make_shared<Mesh>(vertices, indices, textures);
@@ -63,8 +64,11 @@ void Model::ExtractVertices(aiMesh* mesh, std::vector<VertexInfo>& vertices)
 
 		//direct assignment 
 		vertex.Position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-		vertex.Normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
-
+		
+        if (mesh->HasNormals())
+        {
+            vertex.Normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+        }
 		// Checking if the mesh has texture coordinates before accessing them
 		if (mesh->mTextureCoords[0])
 		{
@@ -92,4 +96,18 @@ void Model::ExtractIndices(aiMesh* mesh, std::vector<uint32_t>& indices)
 			indices.push_back(face.mIndices[j]);
 
 	}
+}
+
+void Model::ExtractTextures(aiMaterial* mat, aiTextureType type, std::vector<Texture*>& texturecontainer, std::string_view typeName)
+{
+ 
+    for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+    {
+        aiString str;
+        mat->GetTexture(type, i, &str);
+        Texture* Texture_ins = new Texture(str.C_Str(),m_Directory,typeName);
+            
+
+        texturecontainer.push_back(Texture_ins);
+    }
 }

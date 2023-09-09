@@ -22,9 +22,7 @@ public:
 	void use();
 
 	template <typename Type>
-	void setUniformValue(std::string_view name, Type value) const {
-		static_assert(std::is_same_v<Type, int> || std::is_same_v<Type, float> || std::is_same_v<Type, glm::vec3> || std::is_same_v<Type, glm::mat4>, "Unsupported type for setUniformValue");
-	}
+	void setUniformValue(std::string_view name, Type value) const = delete;
 
 	template <>
 	void setUniformValue<int>(std::string_view name, int value) const {

@@ -18,7 +18,7 @@ public:
 		 m_Height(std::move(other.m_Height)),
 		 m_nrChannels(std::move(other.m_nrChannels)),
 		 m_TexType(std::move(other.m_TexType)) 
-	{
+	{	
 		other.m_ID = 0;
 		other.m_Width = 0;
 		other.m_Height = 0;
