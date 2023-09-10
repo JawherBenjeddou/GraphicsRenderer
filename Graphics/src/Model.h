@@ -35,11 +35,12 @@ private:
 
 	void ExtractIndices(aiMesh* mesh, std::vector<uint32_t>& indices);
 	
-	std::vector <std::shared_ptr<Texture>> ExtractTextures(aiMaterial* mat, aiTextureType type, std::string_view typeName);
+	void ExtractTextures(aiMaterial* mat, std::vector <Texture>& texturescontainer, aiTextureType type, std::string_view typeName);
 
 private:
 	// model data
 	std::vector<std::shared_ptr<Mesh>> m_Meshes;
 	std::string m_Directory;
-	std::vector <Texture*> m_Textures;
+
+	std::vector <Texture> m_Textures;
 };

@@ -38,7 +38,7 @@ void Model::ProcessNode(aiNode* rootNode, const aiScene* scene) {
     }
 }
 
-// Split ProcessMesh() function into multiple smaller functions for easier readability
+
 std::shared_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
     
     auto* material = scene->mMaterials[mesh->mMaterialIndex];
@@ -46,28 +46,10 @@ std::shared_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
     std::vector<uint32_t> indices;
     ExtractVertices(mesh, vertices);
     ExtractIndices(mesh, indices);
+    ExtractTextures(material, m_Textures, aiTextureType_DIFFUSE, "texture_diffuse");
+    ExtractTextures(material, m_Textures, aiTextureType_SPECULAR, "texture_specular");
 
-    for (size_t i = 0; i < material->GetTextureCount(aiTextureType_DIFFUSE); i++)
-    {
-        aiString str;
-        material->GetTexture(aiTextureType_DIFFUSE, i, &str);
-        Texture* Texture_ins = new Texture(str.C_Str(), m_Directory, "texture_diffuse");
-        m_Textures.push_back(Texture_ins);
-    }
-    for (size_t i = 0; i < material->GetTextureCount(aiTextureType_SPECULAR); i++)
-    {
-        aiString str;
-        material->GetTexture(aiTextureType_SPECULAR, i, &str);
-        Texture* Texture_ins = new Texture(str.C_Str(), m_Directory, "texture_specular");
-        m_Textures.push_back(Texture_ins);
-    }
-
-
-   /* auto extractedTextures = ExtractTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-    textures.insert(textures.end(),std::make_move_iterator(extractedTextures.begin()),std::make_move_iterator(extractedTextures.end()));*/
-    //ExtractTextures(material, aiTextureType_SPECULAR, textures, "texture_specular");
-    
-    // Create the Mesh object using std::make_shared
+    // Creating Mesh object using std::make_shared
     return std::make_shared<Mesh>(vertices, indices, m_Textures);
 }
 
@@ -115,16 +97,15 @@ void Model::ExtractIndices(aiMesh* mesh, std::vector<uint32_t>& indices)
 	}
 }
 
-std::vector <std::shared_ptr<Texture>> Model::ExtractTextures(aiMaterial* mat, aiTextureType type, std::string_view typeName)
+// Extract Textures data from the mesh and populate the Textures vector.
+void Model::ExtractTextures(aiMaterial* mat, std::vector <Texture>& texturescontainer, aiTextureType type, std::string_view typeName)
 {
-    std::vector <std::shared_ptr<Texture>> T;
     for (size_t i = 0; i < mat->GetTextureCount(type); i++)
     {
-        std::cout << "i = " << i << std::endl;
         aiString str;
         mat->GetTexture(type, i, &str);
-        std::shared_ptr<Texture> Texture_ins = std::make_shared<Texture>(str.C_Str(), m_Directory, typeName);
-        T.push_back(Texture_ins);
+        Texture Texture_ins(str.C_Str(), m_Directory, typeName);
+        texturescontainer.push_back(std::move(Texture_ins));
     }
-    return T;
 }
+

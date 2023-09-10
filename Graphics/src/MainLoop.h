@@ -38,7 +38,7 @@ namespace Graphics {
 
 		GuiSetup::OnAttach(screen.getWindow());
 
-		Model ourModel("../assets/models/cyborg/cyborg.obj");
+		Model model("../assets/models/planet/planet.obj");
 
 		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -67,7 +67,7 @@ namespace Graphics {
 			// Object Rendering (Cube)
 			//-----------------------
 			shader.use();
-			glm::mat4 model2 = glm::translate(glm::mat4(1.0f), Position2) * glm::rotate(glm::mat4(1.0f), /*static_cast<float>(glfwGetTime()) * */0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
+			glm::mat4 model2 = glm::translate(glm::mat4(1.0f), Position2) * glm::rotate(glm::mat4(1.0f),0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
 			shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
 			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
 			shader.setUniformValue<glm::mat4>("model", model2);
@@ -98,7 +98,7 @@ namespace Graphics {
 			shader.setUniformValue<glm::vec3>("u_light.diffuseStrength",diffuselight); // darkened
 			shader.setUniformValue<glm::vec3>("u_light.specularStrength",specularlight);
 
-			ourModel.Draw(shader);
+			model.Draw(shader);
 
 			//OBJECT TEMPORARY MOVEMENT
 			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
