@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<VertexInfo> vertices, std::vector<uint32_t> indices, std::vector<Texture*>& textures)
+Mesh::Mesh(std::vector<VertexInfo> vertices, std::vector<uint32_t> indices, std::vector <Texture*>& textures)
 	:m_Vertices(vertices),
 	 m_Indices(indices),
 	 m_Textures(textures)
@@ -12,25 +12,22 @@ void Mesh::Draw(Shader& shader)
 {
 	uint32_t diffuseNr = 1;
 	uint32_t specularNr = 1;
-	int k = 0;
-	for (size_t i = 0; i < m_Textures.size(); i++)
+	uint32_t i = 0;
+	for (auto& textureinst : m_Textures)
 	{
-		m_Textures[i]->Bind(i);
-		
+		textureinst->Bind(i);
 		// retrieve texture number (the N in diffuse_textureN)
 		std::string number;
-		std::string name = m_Textures[i]->getType();
+		std::string name = textureinst->getType();
 		if (name == "texture_diffuse")
-		{
 			number = std::to_string(diffuseNr++);
-		}
 		else if (name == "texture_specular")
-		{
 			number = std::to_string(specularNr++);
-		}
-		shader.setUniformValue<int>(("material." + name + number).c_str(), k);
+		shader.setUniformValue<int>(("u_material." + name + number).c_str(), i);
+		i++;
 	}
-
+	//shader.setUniformValue<int>("material.texture_diffuse", 0);
+	
 	GLCall(glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0));
 
 }

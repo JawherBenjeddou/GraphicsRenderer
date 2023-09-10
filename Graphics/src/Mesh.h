@@ -28,7 +28,7 @@ struct VertexInfo
 class Mesh {
 public:
 	
-	Mesh(std::vector<VertexInfo> vertices, std::vector<uint32_t> indices, std::vector<Texture*>& textures);
+	Mesh(std::vector<VertexInfo> vertices, std::vector<uint32_t> indices, std::vector <Texture*>& textures);
 
 	void Draw(Shader& shader);
 
@@ -43,5 +43,5 @@ private:
 	// mesh data
 	std::vector<VertexInfo> m_Vertices;
 	std::vector<uint32_t> m_Indices;
-	std::vector<Texture*> & m_Textures;
+	std::vector <Texture*>& m_Textures;
 };

@@ -28,6 +28,8 @@ public:
 
 	~Texture();
 
+	
+
 	//BIND AND UNBIND TEXTURE
 	//const uint32_t& : this is used so the function accepts l and r values (r value = "0" l value = "i")
 	//bcs using only int& make us unable to use r values

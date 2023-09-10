@@ -18,7 +18,7 @@ Texture::Texture(const char* filepath, std::string& directory, std::string_view 
 	unsigned char* data = stbi_load(filename.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
 	if (data)
 	{
-		GLenum format = NULL;
+		GLenum format;
 		if (m_nrComponents == 1)
 			format = GL_RED;
 		else if (m_nrComponents == 3)
