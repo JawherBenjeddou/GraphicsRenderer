@@ -20,13 +20,13 @@
 
 namespace Graphics {
 
-	
+
 	void Run()
 	{
 		// -----------------------------------------------------------------------------
 		//                             GLFW Initialization
 		// -----------------------------------------------------------------------------
-		Screen screen("Graphics", 1200, 900);
+		Screen screen("Graphics", SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		// -----------------------------------------------------------------------------
 		//                             Classes Initialization
@@ -38,7 +38,7 @@ namespace Graphics {
 
 		GuiSetup::OnAttach(screen.getWindow());
 
-		Model model("../assets/models/planet/planet.obj");
+		Model model("../assets/models/Planet/Planet.obj");
 
 		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -50,7 +50,6 @@ namespace Graphics {
 		float sens = 0.1f;
 		float rotation = 0.0f;
 		glm::vec3 LightPos(4.0f, 2.0f, 3.0f);
-		glm::vec3 Position2(0.0f, 0.0f, 0.0f);
 		//To remove cursor from screen
 		glfwSetInputMode(screen.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		while (!glfwWindowShouldClose(screen.getWindow()))
@@ -59,26 +58,16 @@ namespace Graphics {
 
 			screen.Clear(clear_color);
 			GuiSetup::Begin();
-			glm::vec3 lightColor(1.0f,1.0f,1.0f);
+			glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
 			glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
 			glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-
-
-			// Object Rendering (Cube)
-			//-----------------------
 			shader.use();
-			glm::mat4 model2 = glm::translate(glm::mat4(1.0f), Position2) * glm::rotate(glm::mat4(1.0f),0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
-			shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
-			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
-			shader.setUniformValue<glm::mat4>("model", model2);
-			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model2)));
-			shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrix);
-			
+			//SHADER CONFIGS
 			//TEXTURE BINDING (LIGHTING STUFF)
 			//-------------------------------
 			shader.setUniformValue<glm::vec3>("u_camerapos", camera.getCameraPosition());
-			glm::vec3 directionalLight(-1.0f, -1.0f, -1.0f);
-			shader.setUniformValue<glm::vec3>("u_light.direction", directionalLight);
+			glm::vec3 directionalLight2(-1.0f, -1.0f, -1.0f);
+			shader.setUniformValue<glm::vec3>("u_light.direction", directionalLight2);
 			//POINT LIGHT CONFIG
 			//------------------
 			shader.setUniformValue<glm::vec3>("u_PointLight.position", LightPos);
@@ -94,31 +83,36 @@ namespace Graphics {
 			glm::vec3 ambientlight(0.1f, 0.1f, 0.1f);
 			glm::vec3 diffuselight(0.8f, 0.6f, 0.7f);
 			glm::vec3 specularlight(1.0f, 1.0f, 1.0f);
-			shader.setUniformValue<glm::vec3>("u_light.ambientStrength",ambientlight);
-			shader.setUniformValue<glm::vec3>("u_light.diffuseStrength",diffuselight); // darkened
-			shader.setUniformValue<glm::vec3>("u_light.specularStrength",specularlight);
+			shader.setUniformValue<glm::vec3>("u_light.ambientStrength", ambientlight);
+			shader.setUniformValue<glm::vec3>("u_light.diffuseStrength", diffuselight); // darkened
+			shader.setUniformValue<glm::vec3>("u_light.specularStrength", specularlight);
+
+
+
+			// Object Rendering (Cube)
+			//-----------------------
+			glm::mat4 modelXX = glm::scale(glm::mat4(1.0f),glm::vec3(10.0f, 0.5f, 10.0f)) * glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f, -4.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
+			shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
+			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
+			shader.setUniformValue<glm::mat4>("model", modelXX);
+			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelXX)));
+			shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrix);
 
 			model.Draw(shader);
 
-			//OBJECT TEMPORARY MOVEMENT
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-				LightPos.y += 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
-				LightPos.y -= 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-				LightPos.x += 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
-				LightPos.x -= 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_I) == GLFW_PRESS)
-				Position2.y += 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_K) == GLFW_PRESS)
-				Position2.y -= 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_L) == GLFW_PRESS)
-				Position2.x -= 0.1f;
-			if (glfwGetKey(screen.getWindow(), GLFW_KEY_J) == GLFW_PRESS)
-				Position2.x += 0.1f;
+			// Object Rendering (Floor)
+			//-----------------------
+			//glm::mat4 model2 =glm::scale(glm::mat4(1.0f),glm::vec3(7.0f, 1.0f, 7.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 7.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
+			/*shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
+			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());*/
+			shader.setUniformValue<glm::mat4>("model", glm::mat4(1.0f));
+			//glm::mat3 normalMatrix2 = glm::transpose(glm::inverse(glm::mat3(model2)));
+			//shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrix2);
 
+			model.Draw(shader);
 
+			shader.setUniformValue<glm::mat4>("model", glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, 0.0f, 0.0f)));
+			model.Draw(shader);
 			// Get current mouse position
 			double mouseX, mouseY;
 			glfwGetCursorPos(screen.getWindow(), &mouseX, &mouseY);

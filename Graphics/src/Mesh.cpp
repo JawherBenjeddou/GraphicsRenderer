@@ -44,4 +44,6 @@ void Mesh::SetupMesh()
 	// vertex texture coords
 	GLCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexInfo), (void*)offsetof(VertexInfo, TexCoords)));
 	GLCall(glEnableVertexAttribArray(2));
+	
+
 }

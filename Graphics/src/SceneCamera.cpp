@@ -1,7 +1,8 @@
 #include "SceneCamera.h"
+#include "DebugUtils.h"
 
 SceneCamera::SceneCamera() :
-    m_position(0.0f, 0.0f, 7.0f),
+    m_position(0.0f, 0.0f, 15.0f),
     m_ViewDirection(0.0f, 0.0f, -1.0f),
     m_up(0.0f, 1.0f, 0.0f),
     m_LastMousePosition(0.0f, 0.0f)
@@ -16,7 +17,7 @@ glm::mat4 SceneCamera::getViewMatrix() const
 
 glm::mat4 SceneCamera::getProjectionMatrix() const
 {
-	return glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 500.0f);
+	return glm::perspective(glm::radians(45.0f), SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 500.0f);
 }
 
 void SceneCamera::setMouseSensitivity(float NewSens)
