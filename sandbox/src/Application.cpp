@@ -17,5 +17,5 @@
 int main(int argc, char* argv[])
 {
     Graphics::Run();
-    return 0;
+    return EXIT_SUCCESS;
 }
