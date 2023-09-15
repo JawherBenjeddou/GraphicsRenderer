@@ -34,21 +34,26 @@ void Screen::initGL() {
 
     //glEnable(GL_CULL_FACE); //skipping the rendering of certain faces of 3D objects that are not visible
     glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_STENCIL_TEST);
     //glDepthFunc(GL_ALWAYS);
    // glEnable(GL_BLEND);
-    glDepthFunc(GL_LESS);
+    //glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glDepthMask(GL_TRUE);
+   // glDepthMask(GL_FALSE);
     // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void Screen::Clear(glm::vec4& color) {
     GLCall(glClearColor(color.x, color.y,color.z, color.w));
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 }
 
 void Screen::Update() {
+
+
     glfwSwapBuffers(window);
+    //glStencilFunc(GL_LESS, 1, 0x00);
 }
 
 int Screen::getWidth() {

@@ -1411,5 +1411,6 @@
     <None Include="shaders\Frag.glsl" />
     <None Include="shaders\LightFrag.glsl" />
     <None Include="shaders\LightVert.glsl" />
+    <None Include="shaders\outline.frag" />
   </ItemGroup>
 </Project>

@@ -20,7 +20,6 @@
 
 namespace Graphics {
 
-
 	void Run()
 	{
 		// -----------------------------------------------------------------------------
@@ -32,13 +31,14 @@ namespace Graphics {
 		//                             Classes Initialization
 		// -----------------------------------------------------------------------------
 		Shader shader("../Graphics/shaders/Frag.glsl", "../Graphics/shaders/Vert.glsl");
+		Shader outlining("../Graphics/shaders/outline.frag", "../Graphics/shaders/Vert.glsl");
 		SceneCamera camera;
 		GameTimer Timer;
 
 
 		GuiSetup::OnAttach(screen.getWindow());
 
-		Model model("../assets/models/Planet/Planet.obj");
+		Model model("../assets/models/asteroid/scene.gltf");
 
 		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -87,32 +87,40 @@ namespace Graphics {
 			shader.setUniformValue<glm::vec3>("u_light.diffuseStrength", diffuselight); // darkened
 			shader.setUniformValue<glm::vec3>("u_light.specularStrength", specularlight);
 
-
-
 			// Object Rendering (Cube)
-			//-----------------------
-			glm::mat4 modelXX = glm::scale(glm::mat4(1.0f),glm::vec3(10.0f, 0.5f, 10.0f)) * glm::translate(glm::mat4(1.0f),glm::vec3(-1.0f, -4.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
+			// -----------------------
+			// Configure stencil operations for rendering the object.
+			glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+			glStencilFunc(GL_ALWAYS, 1, 0xFF);
+			glStencilMask(0xFF);
+
+			glm::mat4 modelXX =glm::scale(glm::mat4(1.0f),glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f),glm::vec3(-10.0f, -4.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
 			shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
 			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
 			shader.setUniformValue<glm::mat4>("model", modelXX);
 			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelXX)));
 			shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrix);
-
 			model.Draw(shader);
 
-			// Object Rendering (Floor)
-			//-----------------------
-			//glm::mat4 model2 =glm::scale(glm::mat4(1.0f),glm::vec3(7.0f, 1.0f, 7.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 7.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
-			/*shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
-			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());*/
-			shader.setUniformValue<glm::mat4>("model", glm::mat4(1.0f));
-			//glm::mat3 normalMatrix2 = glm::transpose(glm::inverse(glm::mat3(model2)));
-			//shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrix2);
+			// Configure stencil operations for rendering the outline.
+			glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+			glStencilMask(0x00); // Disable writing to the stencil buffer.
 
-			model.Draw(shader);
 
-			shader.setUniformValue<glm::mat4>("model", glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, 0.0f, 0.0f)));
-			model.Draw(shader);
+			//glDisable(GL_DEPTH_TEST);
+			outlining.use();
+			glm::mat4 outlinemat = glm::scale(glm::mat4(1.0f), glm::vec3(1.1f, 1.1f, 1.1f)) * glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, -4.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
+			outlining.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
+			outlining.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
+			outlining.setUniformValue<glm::mat4>("model", outlinemat);
+			model.Draw(outlining);
+			// Restore stencil settings.
+			glStencilMask(0xFF);
+			glStencilFunc(GL_ALWAYS, 0, 0xFF);
+
+			// Disable stencil test for subsequent rendering.
+			glDisable(GL_STENCIL_TEST);
+
 			// Get current mouse position
 			double mouseX, mouseY;
 			glfwGetCursorPos(screen.getWindow(), &mouseX, &mouseY);
