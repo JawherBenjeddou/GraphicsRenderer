@@ -31,7 +31,7 @@ namespace Graphics {
 		//                             Classes Initialization
 		// -----------------------------------------------------------------------------
 		Shader shader("../Graphics/shaders/Frag.glsl", "../Graphics/shaders/Vert.glsl");
-		Shader outlining("../Graphics/shaders/outline.frag", "../Graphics/shaders/Vert.glsl");
+		
 		SceneCamera camera;
 		GameTimer Timer;
 		
@@ -89,7 +89,7 @@ namespace Graphics {
 
 		
 			glm::mat4 modelMatrix= glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
-			model.RenderModelWithOutline(shader, outlining, camera, modelMatrix,glm::vec3(0.0f,1.0f,0.0f));
+			model.RenderModelWithOutline(shader,camera, modelMatrix,glm::vec3(0.0f,1.0f,0.0f));
 
 		
 			//-----------------------------------

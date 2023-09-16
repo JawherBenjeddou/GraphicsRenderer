@@ -110,9 +110,9 @@ void Model::ExtractTextures(aiMaterial* mat, std::vector <Texture>& texturescont
 }
 
 //TODO : only works with simple objects figure out how to make it work with complex models 
-void Model::RenderModelWithOutline(Shader& shader,Shader& outlining,SceneCamera& camera,glm::mat4 modelMatrix,glm::vec3 outlinecolor)
+void Model::RenderModelWithOutline(Shader& shader,SceneCamera& camera,glm::mat4 modelMatrix,glm::vec3 outlinecolor)
 {
-
+    Shader outlining("../Graphics/shaders/outline.frag", "../Graphics/shaders/Vert.glsl");
     glStencilFunc(GL_ALWAYS, 1, 0xFF); // means that the stencil test always passes if value is equal 1
     glStencilMask(0xFF); //enable writing to the stencil buffer
     shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());

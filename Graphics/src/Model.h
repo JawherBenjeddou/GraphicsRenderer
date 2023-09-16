@@ -24,7 +24,7 @@ public:
 
 	void Draw(Shader& shader);
 
-	void RenderModelWithOutline(Shader& shader, Shader& outlining, SceneCamera& camera,glm::mat4 modelMatrix,glm::vec3 outlinecolor);
+	void RenderModelWithOutline(Shader& shader,SceneCamera& camera,glm::mat4 modelMatrix,glm::vec3 outlinecolor);
 
 private:
 	void LoadModel(std::string_view path);
