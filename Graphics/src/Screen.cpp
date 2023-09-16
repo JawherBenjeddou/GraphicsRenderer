@@ -34,16 +34,18 @@ void Screen::initGL() {
 
     //glEnable(GL_CULL_FACE); //skipping the rendering of certain faces of 3D objects that are not visible
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_STENCIL_TEST);
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     //glDepthFunc(GL_ALWAYS);
    // glEnable(GL_BLEND);
     //glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    // glDepthMask(GL_FALSE);
     // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-}
+} 
 
 void Screen::Clear(glm::vec4& color) {
+    glClearStencil(0);  //sets the clear value for the stencil buffer to zero.
     GLCall(glClearColor(color.x, color.y,color.z, color.w));
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
