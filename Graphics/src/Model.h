@@ -24,6 +24,8 @@ public:
 
 	void Draw(Shader& shader);
 
+	void RenderModelWithOutline(Shader& shader, Shader& outlining, SceneCamera& camera,glm::mat4 modelMatrix,glm::vec3 outlinecolor);
+
 private:
 	void LoadModel(std::string_view path);
 
@@ -37,6 +39,7 @@ private:
 	
 	void ExtractTextures(aiMaterial* mat, std::vector <Texture>& texturescontainer, aiTextureType type, std::string_view typeName);
 
+	
 private:
 	// model data
 	std::vector<std::shared_ptr<Mesh>> m_Meshes;

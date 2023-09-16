@@ -109,3 +109,36 @@ void Model::ExtractTextures(aiMaterial* mat, std::vector <Texture>& texturescont
     }
 }
 
+//TODO : only works with simple objects figure out how to make it work with complex models 
+void Model::RenderModelWithOutline(Shader& shader,Shader& outlining,SceneCamera& camera,glm::mat4 modelMatrix,glm::vec3 outlinecolor)
+{
+
+    glStencilFunc(GL_ALWAYS, 1, 0xFF); // means that the stencil test always passes if value is equal 1
+    glStencilMask(0xFF); //enable writing to the stencil buffer
+    shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
+    shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
+    shader.setUniformValue<glm::mat4>("model", modelMatrix);
+    glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
+    shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrix);
+    Draw(shader);
+
+    //Scaled up object
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF); // tests passes for pixels where the stencil value is not equal to 1.
+    glStencilMask(0x00); // Disable writing to the stencil buffer
+    glDisable(GL_DEPTH_TEST);
+    outlining.use();
+    glm::mat4 modelMatrix2 = glm::scale(glm::mat4(1.0f), glm::vec3(1.05f, 1.05f, 1.05f)) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
+    outlining.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
+    outlining.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
+    outlining.setUniformValue<glm::mat4>("model", modelMatrix2);
+    glm::mat3 normalMatrixForCube = glm::transpose(glm::inverse(glm::mat3(modelMatrix2)));
+    outlining.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrixForCube);
+    outlining.setUniformValue<glm::vec3>("color", outlinecolor);
+    Draw(outlining);
+
+    //Reset stencil buffer to known state and re - enable the depth_test
+    glStencilMask(0xFF);
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glEnable(GL_DEPTH_TEST);
+}
+

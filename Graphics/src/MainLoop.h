@@ -38,7 +38,7 @@ namespace Graphics {
 
 		GuiSetup::OnAttach(screen.getWindow());
 
-		Model model("../assets/models/cuube/cube.obj");
+		Model model("../assets/models/airplane/scene.gltf");
 
 		glm::vec4 clear_color = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -87,53 +87,23 @@ namespace Graphics {
 			shader.setUniformValue<glm::vec3>("u_light.diffuseStrength", diffuselight); // darkened
 			shader.setUniformValue<glm::vec3>("u_light.specularStrength", specularlight);
 
-			//STARTING HERE
-			// Object Rendering (Cube)
-			// -----------------------
-			//WRITING TO THE STENCIL BUFFER 
-			glStencilFunc(GL_ALWAYS, 1, 0xFF); // means that the stencil test always passes if value is equal 1
-			glStencilMask(0xFF); //enable writing to the stencil buffer
-			glm::mat4 modelXX =glm::scale(glm::mat4(1.0f),glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f),glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
-			shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
-			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
-			shader.setUniformValue<glm::mat4>("model", modelXX);
-			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelXX)));
-			shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrix);
-			model.Draw(shader);
+		
+			glm::mat4 modelMatrix= glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
+			model.RenderModelWithOutline(shader, outlining, camera, modelMatrix,glm::vec3(0.0f,1.0f,0.0f));
+
+		
 			//-----------------------------------
 			//ANOTHER OBJECT WOHOO
-			glStencilMask(0x00); // Disable writing to the stencil buffer
 			shader.use();
 			glm::mat4 modelY = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(6.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
 			shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
 			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
 			shader.setUniformValue<glm::mat4>("model", modelY);
-			glm::mat3 normalMatrixSS = glm::transpose(glm::inverse(glm::mat3(modelXX)));
+			glm::mat3 normalMatrixSS = glm::transpose(glm::inverse(glm::mat3(modelY)));
 			shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrixSS);
 			model.Draw(shader);
 			//-----------------------------------
 
-				
-			// Object Rendering (another Cube)
-			// ----------------------
-			glStencilFunc(GL_NOTEQUAL, 1, 0xFF); // tests passes for pixels where the stencil value is not equal to 1.
-			glStencilMask(0x00); // Disable writing to the stencil buffer
-			glDisable(GL_DEPTH_TEST);
-			outlining.use();
-			glm::mat4 Cube2 = glm::scale(glm::mat4(1.0f), glm::vec3(1.05f, 1.05f, 1.05f)) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
-			outlining.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
-			outlining.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
-			outlining.setUniformValue<glm::mat4>("model", Cube2);
-			glm::mat3 normalMatrixForCube = glm::transpose(glm::inverse(glm::mat3(Cube2)));
-			outlining.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrixForCube);
-			
-			model.Draw(outlining);
-
-			glStencilMask(0xFF);
-			glStencilFunc(GL_ALWAYS, 1, 0xFF);
-			
-			glEnable(GL_DEPTH_TEST);
-	
 			// Get current mouse position
 			double mouseX, mouseY;
 			glfwGetCursorPos(screen.getWindow(), &mouseX, &mouseY);
