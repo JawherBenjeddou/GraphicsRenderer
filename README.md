@@ -37,3 +37,5 @@ Give a ⭐️ if you like this project!
 # Screenshots
 ![image](https://github.com/JawherBenjeddou/GraphicsEngine/assets/102749041/77ec4b5c-081c-4ba1-ba73-58d7c8f5bbc0)
 ![image](https://github.com/JawherBenjeddou/GraphicsEngine/assets/102749041/6fbd0f9a-08c5-40f5-bd81-84f1f8243fbd)
+![outlines](https://github.com/JawherBenjeddou/GraphicsEngine/assets/102749041/cdcdf8d2-aa1e-4e67-abc9-0a2345f0b3c9)
+![image](https://github.com/JawherBenjeddou/GraphicsEngine/assets/102749041/47a2abaa-e9e3-49ae-9cc2-e24057788fa9)

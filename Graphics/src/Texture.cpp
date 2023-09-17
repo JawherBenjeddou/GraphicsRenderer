@@ -4,18 +4,18 @@
 #include "DebugUtils.h"
 
 
-Texture::Texture(const char* filepath, std::string& directory, std::string_view TypeName, bool gamma)
-	:m_Path(filepath),
+Texture::Texture(const char* filename, std::string& directory, std::string_view TypeName, bool gamma)
+	:m_Path(filename),
 	 m_TexType(TypeName),
 	 m_nrChannels(0)
 
 {
-	std::string filename = std::string(filepath);
-	filename = directory + '/' + filename;
+	std::string fp = std::string(filename);
+	fp = directory + '/' + fp;
 	GLCall(glGenTextures(1, &m_ID));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_ID));
 
-	unsigned char* data = stbi_load(filename.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
+	unsigned char* data = stbi_load(fp.c_str(), &m_Width, &m_Height, &m_nrComponents, 0);
 	if (data)
 	{
 		GLenum format;
@@ -30,8 +30,8 @@ Texture::Texture(const char* filepath, std::string& directory, std::string_view 
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, format, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, data));
 		GLCall(glGenerateMipmap(GL_TEXTURE_2D));
 
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)); //changed to GL_CLAMP_TO_EDGE because of grass or transparent borders bug
+		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 
@@ -39,7 +39,7 @@ Texture::Texture(const char* filepath, std::string& directory, std::string_view 
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << filename << std::endl;
+		std::cout << "Texture failed to load at path: " << fp << std::endl;
 		stbi_image_free(data);
 	}
 

@@ -33,15 +33,28 @@ void Screen::initGL() {
     std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
 
     //glEnable(GL_CULL_FACE); //skipping the rendering of certain faces of 3D objects that are not visible
+    
+    //DEPTH SETTINGS 
+    //-----------------
     glEnable(GL_DEPTH_TEST);
+    //glDepthFunc(GL_ALWAYS);
+    //glDepthFunc(GL_LESS);
+    
+    
+    //STENCIL SETTINGS
+    //-----------------
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-    //glDepthFunc(GL_ALWAYS);
-   // glEnable(GL_BLEND);
-    //glDepthFunc(GL_LESS);
+    //// glDepthMask(GL_FALSE);
+    // glStencilFunc(GL_ALWAYS, 1, 0xFF); // means that the stencil test always passes if value is equal 1
+    // glStencilMask(0xFF); //enable writing to the stencil buffer
+    
+   
+   //BLENDING SETTINGS
+    //-----------------
+    glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-   // glDepthMask(GL_FALSE);
-    // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
 } 
 
 void Screen::Clear(glm::vec4& color) {
@@ -52,10 +65,7 @@ void Screen::Clear(glm::vec4& color) {
 }
 
 void Screen::Update() {
-
-
     glfwSwapBuffers(window);
-    //glStencilFunc(GL_LESS, 1, 0x00);
 }
 
 int Screen::getWidth() {

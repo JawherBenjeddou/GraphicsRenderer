@@ -134,10 +134,13 @@ void main() {
     //POINT LIGHT (LIGHT)
     //Output += CalcPointLight();
     
-       
+    vec4 texColor = texture(u_material.texture_diffuse1, TextPos);
+    if(texColor.a < 0.1)
+    discard;
+    FragColor = texColor;
 
     //vec3(gl_FragCoord.z)
      //float depth = LinearizeDepth(gl_FragCoord.z) / far;
-     FragColor = vec4(Output, 1.0);
+     //FragColor = vec4(Output, 1.0);
     
 }

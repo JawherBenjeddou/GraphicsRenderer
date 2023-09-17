@@ -497,8 +497,6 @@
   <ItemGroup>
     <None Include="shaders\outline.frag" />
     <None Include="shaders\Frag.glsl" />
-    <None Include="shaders\LightFrag.glsl" />
-    <None Include="shaders\LightVert.glsl" />
     <None Include="shaders\Vert.glsl" />
     <None Include="src\shaders\Frag.glsl" />
     <None Include="src\shaders\Vert.glsl" />
