@@ -43,73 +43,73 @@ namespace Graphics {
 		// Define vertices for a cube
 
 // Define vertices for a cube
-		std::vector<VertexInfo> cubeVertices = {
-			// Front face
-			{{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
-			{{0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
-			{{0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
-			{{-0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
+		//std::vector<VertexInfo> cubeVertices = {
+		//	// Front face
+		//	{{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
+		//	{{0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
+		//	{{0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
+		//	{{-0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
 
-			// Back face
-			{{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}},
-			{{0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}},
-			{{0.5f, 0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}},
-			{{-0.5f, 0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}},
+		//	// Back face
+		//	{{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 0.0f}},
+		//	{{0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f}},
+		//	{{0.5f, 0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f}},
+		//	{{-0.5f, 0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f}},
 
-			// Top face
-			{{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}},
-			{{0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}},
-			{{0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
-			{{-0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
+		//	// Top face
+		//	{{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}},
+		//	{{0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}},
+		//	{{0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
+		//	{{-0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
 
-			// Bottom face
-			{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
-			{{0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
-			{{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}},
-			{{-0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}},
+		//	// Bottom face
+		//	{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
+		//	{{0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
+		//	{{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}},
+		//	{{-0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}},
 
-			// Left face
-			{{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
-			{{-0.5f, 0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
-			{{-0.5f, 0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
-			{{-0.5f, -0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
+		//	// Left face
+		//	{{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
+		//	{{-0.5f, 0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
+		//	{{-0.5f, 0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
+		//	{{-0.5f, -0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
 
-			// Right face
-			{{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
-			{{0.5f, 0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
-			{{0.5f, 0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
-			{{0.5f, -0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
-		};
+		//	// Right face
+		//	{{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 1.0f}},
+		//	{{0.5f, 0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 1.0f}},
+		//	{{0.5f, 0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
+		//	{{0.5f, -0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
+		//};
 
-		// Define indices to form the cube's faces
-		std::vector<uint32_t> cubeIndices = {
-			0, 1, 2,  // Front face
-			2, 3, 0,
+		//// Define indices to form the cube's faces
+		//std::vector<uint32_t> cubeIndices = {
+		//	0, 1, 2,  // Front face
+		//	2, 3, 0,
 
-			4, 5, 6,  // Back face
-			6, 7, 4,
+		//	4, 5, 6,  // Back face
+		//	6, 7, 4,
 
-			8, 9, 10,  // Top face
-			10, 11, 8,
+		//	8, 9, 10,  // Top face
+		//	10, 11, 8,
 
-			12, 13, 14,  // Bottom face
-			14, 15, 12,
+		//	12, 13, 14,  // Bottom face
+		//	14, 15, 12,
 
-			16, 17, 18,  // Left face
-			18, 19, 16,
+		//	16, 17, 18,  // Left face
+		//	18, 19, 16,
 
-			20, 21, 22,  // Right face
-			22, 23, 20
-		};
+		//	20, 21, 22,  // Right face
+		//	22, 23, 20
+		//};
 
-		std::string directory = "../assets/textures";
-		Texture texspec("window.png",directory,"texture_diffuse");
-		//Texture textdiff("container2.png", directory, "texture_diffuse");
-		std::vector<Texture> textcontainer;
-		textcontainer.push_back(std::move(texspec));
-		//textcontainer.push_back(std::move(textdiff));
-		Mesh mesh(cubeVertices, cubeIndices, textcontainer);
-		Mesh mesh2(cubeVertices, cubeIndices, textcontainer);
+		//std::string directory = "../assets/textures";
+		//Texture texspec("window.png",directory,"texture_diffuse");
+		////Texture textdiff("container2.png", directory, "texture_diffuse");
+		//std::vector<Texture> textcontainer;
+		//textcontainer.push_back(std::move(texspec));
+		////textcontainer.push_back(std::move(textdiff));
+		//Mesh mesh(cubeVertices, cubeIndices, textcontainer);
+		//Mesh mesh2(cubeVertices, cubeIndices, textcontainer);
 
 
 
@@ -176,35 +176,32 @@ namespace Graphics {
 			//glm::mat4 modelMatrix= glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, -3.0f, 1.0f));
 			//model.RenderModelWithOutline(shader,camera, modelMatrix,glm::vec3(0.0f,1.0f,0.0f));
 				//THE GROUND 
-			ground.use();
-			glm::mat4 modelY = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 0.0f, 2.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 5.0f, 1.0f));
-			ground.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
-			ground.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
-			ground.setUniformValue<glm::mat4>("model", modelY);
-			glm::mat3 normalMatrixSS = glm::transpose(glm::inverse(glm::mat3(modelY)));
-			shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrixSS);
-			//model.Draw(shader);
-			mesh.Draw(ground);
 		
 			//-----------------------------------
 			//DRAWING OBJECTS (CUBES)
 			shader.use();
-			float x = 6.0f;
-			for (uint32_t count = 0;count < 5 ; count++)
-			{
-				glm::mat4 modelY = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 0.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(x++, 0.0f, 0.0f))* glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0f, 5.0f, 1.0f));
-				shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
-				shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
-				shader.setUniformValue<glm::mat4>("model", modelY);
-				glm::mat3 normalMatrixSS = glm::transpose(glm::inverse(glm::mat3(modelY)));
-				shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrixSS);
-				//model.Draw(shader);
-				mesh.Draw(shader);
-			}
-			x = 0.0f;
-		
-
+			//float x = 6.0f;
+			//for (uint32_t count = 0; count < 5; count++)
+			//{
+			//	glm::mat4 modelY = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 0.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(x++, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+			//	shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
+			//	shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
+			//	shader.setUniformValue<glm::mat4>("model", modelY);
+			//	glm::mat3 normalMatrixSS = glm::transpose(glm::inverse(glm::mat3(modelY)));
+			//	shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrixSS);
+			//	//model.Draw(shader);
+			//	mesh.Draw(shader);
+			//}
 			//-----------------------------------
+			//ground.use();
+			glm::mat4 modelY = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f)) * glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 2.0f, 0.0f));
+			shader.setUniformValue<glm::mat4>("view", camera.getViewMatrix());
+			shader.setUniformValue<glm::mat4>("projection", camera.getProjectionMatrix());
+			shader.setUniformValue<glm::mat4>("model", modelY);
+			glm::mat3 normalMatrixSS = glm::transpose(glm::inverse(glm::mat3(modelY)));
+			shader.setUniformValue<glm::mat4>("u_normalMatrix", normalMatrixSS);
+			model.Draw(shader);
+			//mesh.Draw(ground);
 
 			// Get current mouse position
 			double mouseX, mouseY;
@@ -252,3 +249,5 @@ namespace Graphics {
 		GuiSetup::OnDetach();
 	}
 }
+
+

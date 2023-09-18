@@ -16,8 +16,9 @@ Screen::Screen(std::string_view title, int width, int height):
         return;
     }
     initGL();
+    
 }
-
+extern std::string hello;
 Screen::~Screen() {
     glfwTerminate();
 }
@@ -55,6 +56,10 @@ void Screen::initGL() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    //FACE CULLING
+     //-----------------
+    glEnable(GL_CULL_FACE);
+    
 } 
 
 void Screen::Clear(glm::vec4& color) {
