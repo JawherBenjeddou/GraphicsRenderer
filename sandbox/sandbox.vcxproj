@@ -134,14 +134,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\include;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\GraphicsEngine\Graphics\vendor\STB;C:\Dev\GraphicsEngine\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\GraphicsEngine\Graphics\vendor\ASSIMP\assimp\build\include;C:\Dev\GraphicsEngine\Graphics\vendor\ASSIMP\assimp\include\assimp;C:\Dev\GraphicsEngine\Graphics\vendor\GLM;C:\Dev\GraphicsEngine\Graphics\vendor\ImGui;C:\Dev\GraphicsEngine\Graphics\vendor\GLFW\include;C:\Dev\GraphicsEngine\Graphics\vendor\GLFW\include\GLFW;C:\Dev\GraphicsEngine\Graphics\vendor\GLEW\include;C:\Dev\GraphicsEngine\Graphics\src;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\include;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\include;C:\Dev\Graphics\Graphics\src;C:\Dev\Graphics\Graphics\vendor\GLM;C:\Dev\Graphics\Graphics\vendor\ImGui;C:\Dev\Graphics\Graphics\vendor\STB;C:\Dev\Graphics\Graphics\vendor\GLEW\include;C:\Dev\Graphics\Graphics\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Graphics.lib;assimp-vc143-mtd.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\bin\Debug;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\lib\Debug;C:\Dev\Graphics\bin\Graphics\Debug;C:\Dev\Graphics\Graphics\vendor\GLEW\lib\Release\x64;C:\Dev\Graphics\Graphics\vendor\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Dev\GraphicsEngine\Graphics\vendor\ASSIMP\assimp\build\lib\Debug;C:\Dev\GraphicsEngine\Graphics\vendor\ASSIMP\assimp\build\bin\Release;C:\Dev\GraphicsEngine\Graphics\vendor\ASSIMP\assimp\build\bin\Debug;C:\Dev\GraphicsEngine\Graphics\vendor\GLEW\lib;C:\Dev\GraphicsEngine\Graphics\vendor\GLFW\lib-vc2022;C:\Dev\GraphicsEngine\bin\Graphics\Debug;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\bin\Debug;C:\Dev\Graphics\Graphics\vendor\ASSIMP\assimp\build\lib\Debug;C:\Dev\Graphics\bin\Graphics\Debug;C:\Dev\Graphics\Graphics\vendor\GLEW\lib\Release\x64;C:\Dev\Graphics\Graphics\vendor\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

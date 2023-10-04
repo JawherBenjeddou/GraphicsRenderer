@@ -39,7 +39,7 @@ namespace Graphics {
 
 		GuiSetup::OnAttach(screen.getWindow());
 
-		Model model("../assets/models/airplane/scene.gltf");
+		Model model("../assets/models/planet/planet.obj");
 		// Define vertices for a cube
 
 // Define vertices for a cube

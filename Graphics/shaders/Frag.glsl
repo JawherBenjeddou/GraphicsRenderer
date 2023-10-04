@@ -137,7 +137,7 @@ void main() {
     vec4 texColor = texture(u_material.texture_diffuse1, TextPos);
     if(texColor.a < 0.1)
     discard;
-    FragColor = texColor;
+    FragColor = vec4(Output,1.0f);
 
     //vec3(gl_FragCoord.z)
      //float depth = LinearizeDepth(gl_FragCoord.z) / far;
