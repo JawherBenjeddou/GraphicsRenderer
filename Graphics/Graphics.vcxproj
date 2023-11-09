@@ -165,6 +165,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Bone.cpp" />
     <ClCompile Include="src\GameTimer.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
@@ -188,6 +190,9 @@
     <ClCompile Include="vendor\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Animation.h" />
+    <ClInclude Include="src\assimp_glm_helpers.h" />
+    <ClInclude Include="src\Bone.h" />
     <ClInclude Include="src\GameTimer.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\Model.h" />
@@ -495,7 +500,7 @@
     <ClInclude Include="vendor\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\outline.frag" />
+    <None Include="shaders\outline.glsl" />
     <None Include="shaders\Frag.glsl" />
     <None Include="shaders\Vert.glsl" />
     <None Include="src\shaders\Frag.glsl" />

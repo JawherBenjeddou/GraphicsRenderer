@@ -34,5 +34,5 @@ private:
 	glm::vec2 m_LastMousePosition;
 	float m_Yaw = -90.0f;
 	float m_Pitch = 0.0f;
-	const float MovementSpeed = 8.0f;
+	const float MovementSpeed = 50.0f;
 };

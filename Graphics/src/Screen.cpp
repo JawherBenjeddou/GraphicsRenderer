@@ -35,7 +35,7 @@ void Screen::initGL() {
 
     //glEnable(GL_CULL_FACE); //skipping the rendering of certain faces of 3D objects that are not visible
     
-    //DEPTH SETTINGS 
+    //DEPTH SETTINGS    
     //-----------------
     glEnable(GL_DEPTH_TEST);
     //glDepthFunc(GL_ALWAYS);

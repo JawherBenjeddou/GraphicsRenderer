@@ -24,7 +24,7 @@ static bool GLLogCall()
     #define GLCall(x) x
 #endif
 
-#define SCREEN_WIDTH 800.0f
-#define SCREEN_HEIGHT 600.0f
+#define SCREEN_WIDTH 1200.0f
+#define SCREEN_HEIGHT 800.0f
 
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_FlipUVs)

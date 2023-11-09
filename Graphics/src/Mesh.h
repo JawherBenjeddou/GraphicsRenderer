@@ -16,11 +16,27 @@
 #include "SceneCamera.h"
 #include "Texture.h"
 
-struct VertexInfo
-{
+#define MAX_BONE_INFLUENCE 4
+#define MAX_BONE_WEIGHTS 0x7fffffff
+
+struct VertexInfo {
+	// position
 	glm::vec3 Position;
+	// normal
 	glm::vec3 Normal;
+	// texCoords
 	glm::vec2 TexCoords;
+
+	// tangent
+	glm::vec3 Tangent;
+	// bitangent
+	glm::vec3 Bitangent;
+
+	//bone indexes which will influence this vertex
+	int m_BoneIDs[MAX_BONE_INFLUENCE];
+	//weights from each bone
+	float m_Weights[MAX_BONE_INFLUENCE];
+
 };
 // = [0.2f, 0.4f, 0.6f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f];
 
@@ -29,7 +45,7 @@ class Mesh {
 public:
 	
 	Mesh(std::vector<VertexInfo> vertices, std::vector<uint32_t> indices, std::vector <Texture>& textures);
-
+		
 	void Draw(Shader& shader);
 
 private:

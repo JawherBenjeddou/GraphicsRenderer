@@ -44,6 +44,12 @@ void Mesh::SetupMesh()
 	// vertex texture coords
 	GLCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexInfo), (void*)offsetof(VertexInfo, TexCoords)));
 	GLCall(glEnableVertexAttribArray(2));
-	
+	// ids
+	glEnableVertexAttribArray(3);
+	glVertexAttribIPointer(3, 4, GL_INT, sizeof(VertexInfo), (void*)offsetof(VertexInfo, m_BoneIDs));
+
+	// weights
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(VertexInfo),(void*)offsetof(VertexInfo, m_Weights));
 
 }
