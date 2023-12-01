@@ -1,12 +1,10 @@
 # What is GraphicsEngine
-## Description
-GraphicsEngine is an alternative game engine, inspired by industry standards. opened to any contribution.
+# Disclaimer
+This project is created for personal learning purposes, and its primary goal is to explore and practice various concepts and technologies of 3D rendering. It is not intended to be a fully polished or production-ready solution.
 
 ## Goals
 my goals for this project were:
-- Understanding how to architect a game engine
 - Making an Engine that i can play with and test stuff whenever i learn something new
-- Designing an application thinking of end-users
 - Making a game engine as simple as possible
 - Producing high-quality modern code
 - Dealing with a long-term project
@@ -27,7 +25,7 @@ just git clone --recursive and you good to go ! (for now)
 ## 3. Requirements
 - RAM: 100MB
 - OS: Windows 10/11 (maybe other windows work idk)
-- GPU: Graphics card supporting OpenGL 4.3/4.6
+- GPU: Graphics card supporting OpenGL 4.6
 - CPU: x64
   
 ## 🤝 Support
